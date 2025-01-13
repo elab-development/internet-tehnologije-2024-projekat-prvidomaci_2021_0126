@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->integer('money_amount');
-            
-            $table->text('description');
+            $table->integer('money_amount'); // samo amount
+            //table->text('status)
+            $table->text('description'); //ovoga nema vise
             $table->timestamps();
+            // $table->foreignId('account_id');
         });
     }
 
