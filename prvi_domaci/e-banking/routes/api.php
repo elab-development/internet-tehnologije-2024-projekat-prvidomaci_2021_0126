@@ -10,8 +10,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::resource('accounts', AccountController::class);
-
 
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
@@ -41,4 +39,5 @@ Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');    
     Route::post('admin/logout', [AuthController::class, 'logoutAdmin']);
+    Route::resource('accounts', AccountController::class);
 });

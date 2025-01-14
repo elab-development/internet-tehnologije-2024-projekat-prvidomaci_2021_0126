@@ -7,17 +7,34 @@ use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // public function index()
+    // {
+    //     $accounts = Account::all();
+    //     return AccountResource::collection($accounts);
+    // }
+
+    public function index(Request $request)
     {
-        $accounts = Account::all();
-        return AccountResource::collection($accounts);
+        $query = Account::query();
+        //kesiranje 
+        $accounts = Cache::remember('accounts', 10, function () use ($query) {
+            return $query->paginate(20);
+        });
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Accounts fetched.',
+            'data' => $accounts,
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
