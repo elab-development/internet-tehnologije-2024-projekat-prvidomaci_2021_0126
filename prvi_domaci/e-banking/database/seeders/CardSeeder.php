@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use app\Models\Card;
 
 class CardSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class CardSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Card::factory()->count(10)->create();
     }
 }

@@ -17,9 +17,9 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-            'amount' => fake()->numberBetween(1,100000),
-            'status' => fake()->randomElement('completed', 'pending', 'failed'),
-            'account' => Account::factory(),
+            'amount' => fake()->numberBetween(1,1000),
+            'status' => fake()->randomElement(['completed', 'pending', 'failed']),
+            'account_id' => Account::factory(),
         ];
     }
 }

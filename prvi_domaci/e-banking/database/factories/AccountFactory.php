@@ -20,7 +20,7 @@ class AccountFactory extends Factory
             'account_number'=>fake()->unique()->numerify('################'), //random popunjene cifre umesto #
             'user_id' => User::factory(),
             'currency' => 'USD',
-            'balance' => fake()->randomFloat(2,0,1000000), //broj izmedju ova dva poslednja
+            'balance' => fake()->randomFloat(2,0,20000), //broj izmedju ova dva poslednja
             'is_active' => fake()->boolean(),
         ];
     }
