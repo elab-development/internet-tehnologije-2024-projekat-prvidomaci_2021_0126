@@ -25,5 +25,19 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
     Route::resource('accounts', AccountController::class)->only(['update','store','destroy']);
-    Route::post('auth/logout', [AuthController::class, 'logoutUser']);
+    Route::post('auth/logout', [AuthController::class, 'logoutUser']);  
+});
+
+
+Route::group(['middleware' => ['auth:admin-api']], function () {
+    Route::get('/admin/dashboard', function () {
+        return response()->json(['message' => 'Welcome to admin dashboard']);
+    });
+});
+
+Route::post('/admin/login', [AuthController::class, 'loginAdmin']);
+Route::post('/admin/register', [AuthController::class, 'createAdmin']);
+
+Route::group(['middleware' => ['auth:admin-api']], function () {
+    Route::post('admin/logout', [AuthController::class, 'logoutAdmin']);
 });

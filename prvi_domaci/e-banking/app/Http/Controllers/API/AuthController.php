@@ -113,7 +113,6 @@ class AuthController extends Controller
     public function logoutUser(Request $request)
     {
         try {
-            // Revoke the token that was used to authenticate the current request
             $request->user()->currentAccessToken()->delete();
 
             return response()->json([
@@ -135,54 +134,105 @@ class AuthController extends Controller
      * @return Admin
      */
     
-    
-    
-    
-    
-//      public function loginAdmin(Request $request)
-// {
-//     try {
-//         $validateUser = Validator::make($request->all(), [
-//             'email' => 'required|email',
-//             'password' => 'required',
-//         ]);
 
-//         if ($validateUser->fails()) {
-//             return response()->json([
-//                 'status' => false,
-//                 'message' => 'Validation error',
-//                 'errors' => $validateUser->errors(),
-//             ], 400);
-//         }
+     public function loginAdmin(Request $request)
+{
+    try {
+        $validateUser = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-//         if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-//             return response()->json([
-//                 'status' => false,
-//                 'message' => 'Invalid credentials',
-//             ], 401);
-//         }
+        if ($validateUser->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validateUser->errors(),
+            ], 400);
+        }
 
-//         $admin = Admin::where('email', $request->email)->first();
+        if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
 
-//         return response()->json([
-//             'status' => true,
-//             'data' => $admin,
-//             'message' => 'Login successful',
-//             'token' => $admin->createToken('Admin Token')->plainTextToken,
-//         ], 200);
-//     } catch (\Throwable $th) {
-//         // Log the exception to debug further
+        $admin = Admin::where('email', $request->email)->first();
+
+        return response()->json([
+            'status' => true,
+            'data' => $admin,
+            'message' => 'Login successful',
+            'token' => $admin->createToken('Admin Token')->plainTextToken,
+        ], 200);
+    } catch (\Throwable $th) {
+        // Log the exception to debug further
         
 
-//         return response()->json([
-//             'status' => false,
-//             'message' => 'Internal Server Error',
-//         ], 500);
-//     }
-// }
+        return response()->json([
+            'status' => false,
+            'message' => 'Internal Server Error',
+        ], 500);
+    }
+}
+
+public function createAdmin(Request $request)
+{
+    try {
+        $validateAdmin = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:admins,email',
+            'password' => 'required|min:8',
+        ]);
+
+        if ($validateAdmin->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validateAdmin->errors(),
+            ], 422);
+        }
+
+        $admin = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            'data' => $admin,
+            'status' => true,
+            'message' => 'Admin created successfully',
+            'token' => $admin->createToken("Admin API Token")->plainTextToken,
+        ], 201);
+
+    } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage(),
+        ], 500);
+    }
+}
 
 
+public function logoutAdmin(Request $request)
+{
+    try {
+        $request->user()->currentAccessToken()->delete();
 
+        return response()->json([
+            'status' => true,
+            'message' => 'Admin logged out successfully.',
+        ], 200);
+
+    } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage()
+        ], 500);
+    }
+}
 
 
 
