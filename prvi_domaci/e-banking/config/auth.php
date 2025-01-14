@@ -52,6 +52,16 @@ return [
                     'provider' => 'admins',
                 ],
 
+        'manager' => [
+                    'driver' => 'session', 
+                    'provider' => 'managers',
+                ],
+
+        'manager-api' => [
+                    'driver' => 'sanctum',
+                    'provider' => 'managers',
+                ],
+
         'api'=> [
                     'driver'=> 'token',
                     'provider'=> 'users',
@@ -84,6 +94,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Admin::class),
+        ],
+        'managers' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Manager::class),
         ],
     ],
 

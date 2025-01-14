@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Manager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -235,5 +236,116 @@ public function logoutAdmin(Request $request)
 }
 
 
+
+
+
+
+
+
+public function loginManager(Request $request)
+{
+    try {
+        $validateUser = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validateUser->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validateUser->errors(),
+            ], 400);
+        }
+
+        $manager = Manager::where('email', $request->email)->first();
+        if (!$manager) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Manager not found.',
+            ], 404);
+        }
+
+        if (!Hash::check($request->password, $manager->password)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
+
+        $token = $manager->createToken('Manager API Token')->plainTextToken;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Login successful',
+            'data' => $manager,
+            'token' => $token,
+        ], 200);
+
+    } catch (\Throwable $th) {
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Internal Server Error',
+        ], 500);
+    }
+}
+
+public function createManager(Request $request)
+{
+    try {
+        $validateManager = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:managers,email',
+            'password' => 'required|min:8',
+        ]);
+
+        if ($validateManager->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validateManager->errors(),
+            ], 422);
+        }
+
+        $manager = Manager::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            'data' => $manager,
+            'status' => true,
+            'message' => 'Manager created successfully',
+            'token' => $manager->createToken("Manager API Token")->plainTextToken,
+        ], 201);
+
+    } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage(),
+        ], 500);
+    }
+}
+
+
+public function logoutManager(Request $request)
+{
+    try {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Manager logged out successfully.',
+        ], 200);
+
+    } catch (\Throwable $th) {
+        return response()->json([
+            'status' => false,
+            'message' => $th->getMessage()
+        ], 500);
+    }
+}
 
 }
