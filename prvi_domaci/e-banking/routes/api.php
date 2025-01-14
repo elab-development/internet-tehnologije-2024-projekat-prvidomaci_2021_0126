@@ -19,8 +19,11 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile', function(Request $request) {
-        $data = auth()->user();
-        return response()->json(['message' => "Welcome to user profile", 'data' => $data]);
+        $data = auth()->user()->load('accounts');
+        return response()->json([
+            'message' => "Welcome to user profile",
+            'user-data' => $data
+        ]);
     });
 
     Route::get('/profile/cards', [AccountCardController::class, 'index'])->name('profile.cards');
