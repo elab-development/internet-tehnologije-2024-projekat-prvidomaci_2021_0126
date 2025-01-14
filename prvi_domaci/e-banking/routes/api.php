@@ -12,8 +12,7 @@ Route::get('/user', function (Request $request) {
 
 Route::resource('accounts', AccountController::class);
 
-Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
@@ -39,5 +38,7 @@ Route::post('/admin/login', [AuthController::class, 'loginAdmin']);
 Route::post('/admin/register', [AuthController::class, 'createAdmin']);
 
 Route::group(['middleware' => ['auth:admin-api']], function () {
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');    
     Route::post('admin/logout', [AuthController::class, 'logoutAdmin']);
 });

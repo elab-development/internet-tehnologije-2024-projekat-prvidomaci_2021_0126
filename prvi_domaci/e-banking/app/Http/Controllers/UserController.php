@@ -4,17 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $users = User::all();
-        return $users;
-    }
+
+     public function index(Request $request)
+     {
+         $query = User::query();
+     
+         // filtriranje po imenu
+         if ($request->has('name') && $request->name != '') {
+             $query->where('name', $request->name);
+         }
+     
+         // paginacija po 15 usera i kesiranje
+         $users = Cache::remember('users', 10, function () use ($query) {
+             return $query->paginate(15);
+         });
+     
+         return response()->json([
+             'status' => true,
+             'message' => 'Users fetched.',
+             'data' => $users,
+         ]);
+     }
+
+
+
+
+
+    // public function index()
+    // {
+    //     $users = User::all();
+    //     return $users;
+    // }
 
     /**
      * Show the form for creating a new resource.
