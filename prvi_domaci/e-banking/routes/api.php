@@ -15,4 +15,15 @@ Route::resource('accounts', AccountController::class);
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
+Route::post('/auth/register', [AuthController::class, 'createUser']);
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function(Request $request) {
+        $data = auth()->user();
+        return response()->json(['message' => "Welcome to user profile", 'data' => $data]);
+    });
+
+// API route for logout user
+Route::post('auth/logout', [AuthController::class, 'logoutUser']);
+});
