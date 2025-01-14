@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -30,7 +32,32 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'account_number' => 'required|string|size:16|unique:accounts,account_number',
+            'currency' => 'required|string|size:3',
+            'balance' => 'required|numeric|min:0|max:20000',
+            'is_active' => 'required|boolean',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422); // 422 
+        }
+
+        $account = Account::create([
+            'account_number' => $request->account_number,
+            'currency' => strtoupper($request->currency), 
+            'balance' => $request->balance,
+            'is_active' => $request->is_active,
+            'user_id' => Auth::user()->id,
+        ]);
+    
+        
+        return response()->json([
+            'message' => 'Account created successfully.',
+            'data' => $account,
+        ], 201); 
+
     }
 
     /**
@@ -54,7 +81,28 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'account_number' => 'required|string|size:16|unique:accounts,account_number,' . $account->id,
+            'currency' => 'required|string|size:3',
+            'balance' => 'required|numeric|min:0|max:20000',
+            'is_active' => 'required|boolean',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422); 
+        }
+
+        $account->account_number = $request->account_number;
+        $account->currency = strtoupper($request->currency); 
+        $account->balance = $request->balance;
+        $account->is_active = $request->is_active;
+
+        $account->save();    
+        return response()->json([
+            'message' => 'Account updated successfully.',
+            'data' => new AccountResource($account),
+        ]);
     }
 
     /**
@@ -62,6 +110,7 @@ class AccountController extends Controller
      */
     public function destroy(Account $account)
     {
-        //
+        $account->delete();
+        return response()->json('Account is deleted successfully.');
     }
 }

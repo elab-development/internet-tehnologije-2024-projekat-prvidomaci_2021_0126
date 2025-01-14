@@ -16,7 +16,7 @@ class AccountResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'account_id' => $this->resource->id,
+            'id' => $this->resource->id,
             'user'=> new UserResource($this->resource->user),
             'account_number' => $this->resource->account_number,
             'currency' => $this->resource->currency,

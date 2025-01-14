@@ -24,6 +24,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return response()->json(['message' => "Welcome to user profile", 'data' => $data]);
     });
 
-// API route for logout user
-Route::post('auth/logout', [AuthController::class, 'logoutUser']);
+    Route::resource('accounts', AccountController::class)->only(['update','store','destroy']);
+    Route::post('auth/logout', [AuthController::class, 'logoutUser']);
 });
