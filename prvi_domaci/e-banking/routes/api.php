@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AccountCardController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountTransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\Api\AuthController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,6 +22,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         $data = auth()->user();
         return response()->json(['message' => "Welcome to user profile", 'data' => $data]);
     });
+
+    Route::get('/profile/cards', [AccountCardController::class, 'index'])->name('profile.cards');
+    Route::get('/profile/transactions', [AccountTransactionController::class, 'index'])->name('profile.transactions');  
 
     Route::resource('accounts', AccountController::class)->only(['update','store','destroy']);
     Route::post('auth/logout', [AuthController::class, 'logoutUser']);  
@@ -43,3 +48,4 @@ Route::group(['middleware' => ['auth:manager-api']], function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');    
     Route::post('manager/logout', [AuthController::class, 'logoutManager']);   
 });
+
