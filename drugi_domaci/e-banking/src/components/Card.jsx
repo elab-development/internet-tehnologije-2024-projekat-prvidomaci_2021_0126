@@ -3,7 +3,6 @@ import mastercard from '../images/mastercard.png';
 import visa from '../images/visa.webp'; 
 import '../style/Card.css';
 
-
 function Card({card}) {
 
   function getPaymentType(){

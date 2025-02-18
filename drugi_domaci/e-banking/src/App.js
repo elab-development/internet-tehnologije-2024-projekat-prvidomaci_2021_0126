@@ -7,6 +7,7 @@ import NewTransaction from './pages/NewTransaction';
 import Transactions from './pages/Transactions';
 import Profile from './pages/Profile';
 import Breadcrumbs from './components/Breadcrumbs';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
 
@@ -295,7 +296,7 @@ function App() {
     "account": "1234567820123456",
   }
   ]
-  const [transactions, setTransactions] = useState(transactionData);
+  const [transactions, setTransactions] = useLocalStorage('transactions', transactionData);
   const [cards, setCards] = useState(cardData);
 
   const updateAccountBalance = (accountId, amount) => {
