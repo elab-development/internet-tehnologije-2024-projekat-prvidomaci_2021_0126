@@ -334,7 +334,7 @@ function App() {
           </>} />
           <Route path="/profile" element={<>
             <Breadcrumbs />
-            <Profile/>
+            <Profile user={user}/>
           </>} />
         </Routes>
       </BrowserRouter>

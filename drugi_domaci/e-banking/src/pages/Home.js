@@ -41,6 +41,10 @@ function Home({ user, accounts }) {
   
     return (
       <div>
+        <h1 className="welcome-heading">Welcome {user.firstName}!</h1>
+        <Link to="/profile" className="profile-link">Profile Info</Link>
+        <p className="accounts-text">Your accounts:</p>
+  
   
         {currentAccount ? (
           <Account account={currentAccount} />
