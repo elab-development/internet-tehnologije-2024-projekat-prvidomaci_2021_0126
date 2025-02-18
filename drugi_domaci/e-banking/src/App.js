@@ -324,7 +324,7 @@ function App() {
             {<Cards cards ={cards}/>}
           </>} />
           <Route path="/transactions" element={<>
-            {<Transactions/> }
+            {<Transactions transactions={transactions}/> }
           </>} />
           <Route path="/new-transaction" element={<>
             {<NewTransaction/>}
