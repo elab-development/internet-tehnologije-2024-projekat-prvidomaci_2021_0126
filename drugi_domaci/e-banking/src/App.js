@@ -318,7 +318,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<>
-            <Home user={currentUser}/>
+            <Home user={currentUser} accounts={accounts}/>
           </>} />
           <Route path="/cards" element={<>
             <Breadcrumbs />
@@ -335,7 +335,6 @@ function App() {
           <Route path="/profile" element={<>
             <Breadcrumbs />
             <Profile/>
-            
           </>} />
         </Routes>
       </BrowserRouter>
