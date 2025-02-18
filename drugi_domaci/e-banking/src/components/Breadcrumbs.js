@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import '../style/Breadcrumbs.css'; 
 
 const Breadcrumbs = () => {
   const { pathname } = useLocation(); // useLocation vraca trenutni URL i ostale props, ali uz {pathname} vraca samo taj prop
