@@ -6,7 +6,7 @@ import Cards from './pages/Cards';
 import NewTransaction from './pages/NewTransaction';
 import Transactions from './pages/Transactions';
 import Profile from './pages/Profile';
-
+import Breadcrumbs from './components/Breadcrumbs';
 
 function App() {
 
@@ -321,15 +321,19 @@ function App() {
             <Home user={currentUser}/>
           </>} />
           <Route path="/cards" element={<>
+            <Breadcrumbs />
             {<Cards cards ={cards}/>}
           </>} />
           <Route path="/transactions" element={<>
+            <Breadcrumbs />
             {<Transactions transactions={transactions}/> }
           </>} />
           <Route path="/new-transaction" element={<>
+            <Breadcrumbs />
             {<NewTransaction/>}
           </>} />
           <Route path="/profile" element={<>
+            <Breadcrumbs />
             <Profile/>
             
           </>} />
