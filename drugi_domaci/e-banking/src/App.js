@@ -298,6 +298,15 @@ function App() {
   const [transactions, setTransactions] = useState(transactionData);
   const [cards, setCards] = useState(cardData);
 
+  const updateAccountBalance = (accountId, amount) => {
+    setAccounts(prevAccounts => prevAccounts.map(account => {
+      if (account.id === accountId) {
+        return {...account, balance: account.balance - amount};
+      }
+      return account;
+    }));
+  };
+
   //Jedini iole relevantan API data koji sam pronasao
   useEffect(() => {
     fetch("https://dummyjson.com/users")
@@ -318,7 +327,8 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<>
-            <Home user={currentUser} accounts={accounts}/>
+            <Breadcrumbs />
+            <Home user={currentUser} accounts={accounts} />
           </>} />
           <Route path="/cards" element={<>
             <Breadcrumbs />
@@ -330,11 +340,13 @@ function App() {
           </>} />
           <Route path="/new-transaction" element={<>
             <Breadcrumbs />
-            {<NewTransaction/>}
+            {<NewTransaction accounts = {accounts } updateAccountBalance ={updateAccountBalance}
+                            transactions={transactions} setTransactions = {setTransactions}/>}
           </>} />
           <Route path="/profile" element={<>
             <Breadcrumbs />
-            <Profile user={user}/>
+            <Profile user={user} />
+            
           </>} />
         </Routes>
       </BrowserRouter>
