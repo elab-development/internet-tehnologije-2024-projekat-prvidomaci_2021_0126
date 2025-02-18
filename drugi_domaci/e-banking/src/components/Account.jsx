@@ -1,5 +1,6 @@
 import React from 'react';
 import accountPic from '../images/account-pic.png';
+import '../style/Account.css'
 
 function Account({ account }) {
   if (!account) {
