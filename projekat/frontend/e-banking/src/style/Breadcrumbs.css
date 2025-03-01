@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+.breadcrumbs {
+  padding: 12px 20px;
+  background-color: #F5EFE7;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.breadcrumbs a {
+  color: #3E5879;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.3s ease;
+  margin-right: 8px;
+}
+
+.breadcrumbs a:hover {
+  color: #213555;
+  transform: scale(1.05);
+}
+
+.breadcrumbs span {
+  color: #213555;
+}
+
+.breadcrumbs a:last-child {
+  color: #D8C4B6;
+  pointer-events: none;
+}

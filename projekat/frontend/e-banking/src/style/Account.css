@@ -1,0 +1,70 @@
+.account-card {
+    background-color: #F5EFE7;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(33, 53, 85, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease-in;
+  }
+  
+  .account-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(33, 53, 85, 0.15);
+  }
+  
+  .account-image {
+    height: 60px;
+    width: auto;
+    margin-bottom: 15px;
+    display: block;
+  }
+  
+  .account-detail {
+    color: #213555;
+    margin: 10px 0;
+    font-size: 0.95rem;
+  }
+  
+  .account-number {
+    font-weight: 600;
+    color: #3E5879;
+    font-size: 1.1rem;
+  }
+  
+  .balance-amount {
+    font-size: 1.4rem;
+    color: #213555;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  
+  .status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .status-active {
+    background-color: #D8C4B6;
+    color: #3E5879;
+  }
+  
+  .status-inactive {
+    background-color: #F5EFE7;
+    color: #3E5879;
+    border: 1px solid #D8C4B6;
+  }
+  
+  .dates-container {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #D8C4B6;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }

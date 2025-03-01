@@ -1,0 +1,62 @@
+
+.new-transaction-container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #F5EFE7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .new-transaction-container h2 {
+    text-align: center;
+    color: #213555;
+    margin-bottom: 20px;
+  }
+  
+  .new-transaction-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    color: #3E5879;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #D8C4B6;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #213555;
+    background-color: #FFFFFF;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #3E5879;
+    outline: none;
+  }
+  
+  .submit-button {
+    padding: 10px;
+    background-color: #3E5879;
+    color: #F5EFE7;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #213555;
+  }

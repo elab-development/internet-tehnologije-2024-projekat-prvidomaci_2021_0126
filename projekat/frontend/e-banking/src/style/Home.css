@@ -1,0 +1,66 @@
+
+.welcome-heading {
+    text-align: center;
+    font-size: 2rem;
+    color: #213555;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .profile-link {
+    display: block;
+    text-align: center;
+    background-color: #3E5879;
+    color: #F5EFE7;
+    padding: 10px 15px;
+    margin: 10px auto;
+    width: fit-content;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+  }
+
+  .profile-link:hover {
+    background-color: #213555;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(33, 53, 85, 0.2);
+  }
+  .accounts-text {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #3E5879;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+
+
+.account-nav-buttons {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .account-button {
+    background-color: #3E5879;
+    color: #F5EFE7;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+  }
+  
+  .account-button:hover {
+    background-color: #213555;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(33, 53, 85, 0.2);
+  }
+  
+  .account-button:active {
+    transform: translateY(0);
+    transition: all 0.1s ease;
+  }
+  
