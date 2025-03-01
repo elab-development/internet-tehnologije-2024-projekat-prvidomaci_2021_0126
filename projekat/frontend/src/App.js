@@ -8,6 +8,8 @@ import Transactions from './pages/Transactions';
 import Profile from './pages/Profile';
 import Breadcrumbs from './components/Breadcrumbs';
 import useLocalStorage from './hooks/useLocalStorage';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
 
@@ -299,6 +301,23 @@ function App() {
   const [transactions, setTransactions] = useLocalStorage('transactions', transactionData);
   const [cards, setCards] = useState(cardData);
 
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    window.sessionStorage.getItem('auth_token') !== null
+  );
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(window.sessionStorage.getItem('auth_token') !== null);
+    };
+  }, []);
+
+
+
+
+
+
   const updateAccountBalance = (accountId, amount) => {
     setAccounts(prevAccounts => prevAccounts.map(account => {
       if (account.id === accountId) {
@@ -325,12 +344,15 @@ function App() {
   return (
     <div className="App">    
       <BrowserRouter>
-        <NavBar />
+        <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
         <Routes>
           <Route path="/" element={<>
             <Breadcrumbs />
             <Home user={currentUser} accounts={accounts} />
-          </>} />
+          </>}>
+
+          </Route>
+
           <Route path="/cards" element={<>
             <Breadcrumbs />
             {<Cards cards ={cards}/>}
@@ -344,6 +366,10 @@ function App() {
             {<NewTransaction accounts = {accounts } updateAccountBalance ={updateAccountBalance}
                             transactions={transactions} setTransactions = {setTransactions}/>}
           </>} />
+          <Route path='/login' element= {<Login/>}/>
+          <Route path='/logout'/>
+          <Route path='/register' element= {<Register/>}/>
+
           <Route path="/profile" element={<>
             <Breadcrumbs />
             <Profile user={user} />
