@@ -4,7 +4,7 @@ import { FiPlus } from 'react-icons/fi';
 import '../style/NavBar.css';
 import axios from 'axios';
 
-function NavBar(isLoggedIn, setIsLoggedIn) {
+function NavBar() {
 
   const navigate = useNavigate();
   function handleLogout(){
@@ -35,17 +35,23 @@ function NavBar(isLoggedIn, setIsLoggedIn) {
         <Link to="/">Shomica Bank</Link>
       </div>
       <ul className="navbar-links">
-        <li><Link to="/">Home</Link></li>
 
         {/* login/logout */}
-        {window.sessionStorage.getItem("auth_token") == null || window.sessionStorage.getItem("auth_token") == 'null' 
-        ? (<li><Link to="/login">Login</Link></li>)
-        : (<li><Link to="/logout" onClick={handleLogout}>Logout</Link></li> ) }
-        {/*  */}
+        {window.sessionStorage.getItem("auth_token") == null 
+        ? <>
+          
+        </>
+        : (<>
+          <li><Link to="/logout" onClick={handleLogout}>Logout</Link></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/cards">Cards</Link></li>
+          <li><Link to="/transactions">Transactions</Link></li>
+          <li><Link to="/new-transaction" className="new-transaction-link"><FiPlus /></Link></li> 
+          </>
+         )
+           }
       
-        <li><Link to="/cards">Cards</Link></li>
-        <li><Link to="/transactions">Transactions</Link></li>
-        <li><Link to="/new-transaction" className="new-transaction-link"><FiPlus /></Link></li>
+        
       </ul>
     </nav>
   );

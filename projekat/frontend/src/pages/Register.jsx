@@ -23,9 +23,6 @@ const Register = () => {
         e.preventDefault();
         axios.post("api/auth/register", userData).then((res) =>{
             console.log(res.data)
-            if(res.data.success === true){
-                window.sessionStorage.setItem("auth_token", res.data.token);
-            }
             navigate("/login")
         }).catch(e=> {
             console.log(e);
@@ -35,7 +32,7 @@ const Register = () => {
     return (
         <div>
     
-        <h2>Create New Transaction</h2>
+        <h2>Register</h2>
           <form onSubmit={handleRegister}>
     
           <div >

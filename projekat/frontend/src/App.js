@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Cards from './pages/Cards';
@@ -10,6 +10,7 @@ import Breadcrumbs from './components/Breadcrumbs';
 import useLocalStorage from './hooks/useLocalStorage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProtectedRoute from './pages/ProtectedRoute';
 
 function App() {
 
@@ -303,21 +304,6 @@ function App() {
 
 
 
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    window.sessionStorage.getItem('auth_token') !== null
-  );
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLoggedIn(window.sessionStorage.getItem('auth_token') !== null);
-    };
-  }, []);
-
-
-
-
-
-
   const updateAccountBalance = (accountId, amount) => {
     setAccounts(prevAccounts => prevAccounts.map(account => {
       if (account.id === accountId) {
@@ -344,38 +330,48 @@ function App() {
   return (
     <div className="App">    
       <BrowserRouter>
-        <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+        <NavBar/>
         <Routes>
-          <Route path="/" element={<>
-            <Breadcrumbs />
-            <Home user={currentUser} accounts={accounts} />
-          </>}>
 
-          </Route>
-
-          <Route path="/cards" element={<>
-            <Breadcrumbs />
-            {<Cards cards ={cards}/>}
-          </>} />
-          <Route path="/transactions" element={<>
-            <Breadcrumbs />
-            {<Transactions transactions={transactions}/> }
-          </>} />
-          <Route path="/new-transaction" element={<>
-            <Breadcrumbs />
-            {<NewTransaction accounts = {accounts } updateAccountBalance ={updateAccountBalance}
-                            transactions={transactions} setTransactions = {setTransactions}/>}
-          </>} />
           <Route path='/login' element= {<Login/>}/>
-          <Route path='/logout'/>
           <Route path='/register' element= {<Register/>}/>
 
-          <Route path="/profile" element={<>
-            <Breadcrumbs />
-            <Profile user={user} />
-            
-          </>} />
-        </Routes>
+          <Route element={<ProtectedRoute/>}>
+
+            <Route path="/" element={<>
+              <Breadcrumbs />
+              <Home user={currentUser} accounts={accounts} />
+            </>}>
+            </Route>
+
+            <Route path="/cards" element={<>
+              <Breadcrumbs />
+              {<Cards cards ={cards}/>}
+              </>} 
+            />
+            <Route path="/transactions" element={<>
+              <Breadcrumbs />
+              {<Transactions transactions={transactions}/> }
+            </>} />
+            <Route path="/new-transaction" element={<>
+              <Breadcrumbs />
+              {<NewTransaction accounts = {accounts } updateAccountBalance ={updateAccountBalance}
+                              transactions={transactions} setTransactions = {setTransactions}/>}
+            </>} />
+
+            <Route path="/profile" element={<>
+              <Breadcrumbs />
+              <Profile user={user} />
+            </>} />
+
+          
+          </Route>
+
+          {/* uz ovo, koju god rutu (cak i pogresnu) korisnik da ukuca, uvek ga vodi ka login page ako nije logged */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+
+          </Routes>
+          
       </BrowserRouter>
     </div>
   );

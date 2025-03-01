@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({}) {
 
   const [userData, setUserData] = useState({
     email:"",
@@ -24,8 +24,8 @@ function Login() {
         console.log(res.data)
         if(res.data.success === true){
             window.sessionStorage.setItem("auth_token", res.data.token);
+            navigate("/");
         }
-        navigate("/");
     }).catch(e=> {
         console.log(e);
     });
@@ -34,7 +34,7 @@ function Login() {
   return (
     <div>
 
-    <h2>Create New Transaction</h2>
+    <h2>Log In</h2>
       <form onSubmit={handleLogin}>
 
 
