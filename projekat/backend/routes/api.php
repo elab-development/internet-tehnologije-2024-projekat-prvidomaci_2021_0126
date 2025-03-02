@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\TransactionController;
 
 
 Route::get('/user', function (Request $request) {
@@ -28,6 +29,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             'user-data' => $data
         ]);
     });
+
+    Route::post('/new-transaction', [TransactionController::class, 'store']);
+    Route::post('/transactions', [TransactionController::class, 'index']);
 
     Route::get('/profile/cards', [AccountCardController::class, 'index'])->name('profile.cards');
     Route::get('/profile/transactions', [AccountTransactionController::class, 'index'])->name('profile.transactions');

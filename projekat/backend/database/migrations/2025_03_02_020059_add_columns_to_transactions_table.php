@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('transactions', function (Blueprint $table) {
             $table->string('recipient_name')->nullable();
             $table->string('recipient_account')->nullable();
-            $table->string('transaction_number', 20)->unique();
+            $table->string('transaction_number', 36)->unique();
         });
     }
 

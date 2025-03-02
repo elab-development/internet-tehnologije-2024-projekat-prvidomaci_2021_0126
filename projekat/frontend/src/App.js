@@ -137,7 +137,7 @@ function App() {
             </>} />
             <Route path="/new-transaction" element={<>
               <Breadcrumbs />
-              {<NewTransaction accounts = {accounts } updateAccountBalance ={updateAccountBalance}
+              {<NewTransaction accounts = {accounts } setAccounts ={setAccounts}
                               transactions={transactions} setTransactions = {setTransactions}/>}
             </>} />
 

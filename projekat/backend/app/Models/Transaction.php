@@ -12,11 +12,11 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'amount',
-        'status',
         'account_id',
         'recipient_name',
         'recipient_account',
+        'amount',
+        'status',
         'transaction_number',
     ];
 
