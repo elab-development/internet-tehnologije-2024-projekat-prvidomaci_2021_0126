@@ -22,40 +22,57 @@ class AuthController extends Controller
     public function createUser(Request $request)
     {
         try {
-            //Validated
-            $validateUser = Validator::make(
-                $request->all(),
-                [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users,email',
-                    'password' => 'required'
-                ]
-            );
+            // Validation rules for all fields
+            $validateUser = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:7',
+                'date_of_birth' => 'required|date',
+                'gender' => 'required|in:male,female,other',
+                'work_status' => 'required|in:underaged,unemployed,student,employed,retired',
+                'street' => 'required|string|max:255',
+                'city' => 'required|string|max:255',
+                'country' => 'required|string|max:255',
+                'postal_code' => 'required|string|max:20',
+                'phone_number' => 'required|string|max:20',
+            ]);
 
+            // Return validation errors if any
             if ($validateUser->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
+                    'message' => 'Validation error',
+                    'errors' => $validateUser->errors(),
+                ], 422); // Use 422 for validation errors
             }
 
+            // Create the user with all fields
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'date_of_birth' => $request->date_of_birth,
+                'gender' => $request->gender,
+                'work_status' => $request->work_status,
+                'street' => $request->street,
+                'city' => $request->city,
+                'country' => $request->country,
+                'postal_code' => $request->postal_code,
+                'phone_number' => $request->phone_number,
             ]);
 
+            // Return success response
             return response()->json([
                 'data' => $user,
                 'success' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
             ], 200);
         } catch (\Throwable $th) {
+            // Handle exceptions
             return response()->json([
                 'success' => false,
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }

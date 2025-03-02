@@ -7,8 +7,11 @@ function Cards({cards}) {
     return (
         <div className='cards-grid'>
         {
+          cards !=null
+          ?
           cards.map ( (card) =>
             <Card key = {card.id} card ={card}/>)  
+          : console.log()
         }  
         </div>
       )

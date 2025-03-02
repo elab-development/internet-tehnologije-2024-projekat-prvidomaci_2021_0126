@@ -15,7 +15,8 @@ class Transaction extends Model
         'amount',
         'status',
         'account_id',
-        'recipient',
+        'recipient_name',
+        'recipient_account',
         'transaction_number',
     ];
 

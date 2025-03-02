@@ -16,7 +16,7 @@ $defaultPassword = 'password123';
                 'password' => Hash::make($defaultPassword),
                 'date_of_birth' => Carbon::now()->subYears(rand(18, 60))->format('Y-m-d'),
                 'gender' => rand(0, 1) ? 'male' : 'female',
-                'work_status' => ['underaged', 'unemployed', 'employed', 'retired'][rand(0, 3)],
+                'work_status' => ['unemployed', 'student', 'employed', 'retired'][rand(0, 3)],
                 'street' => "Street $i",
                 'city' => "City $i",
                 'country' => "Country $i",
@@ -45,11 +45,16 @@ $defaultPassword = 'password123';
                 }
 
                 for ($m = 1; $m <= 15; $m++) {
+                    // Pick a random recipient user different from sender
+                    $recipient = User::where('id', '!=', $user->id)->inRandomOrder()->first();
+                    $recipientAccount = $recipient ? $recipient->accounts()->inRandomOrder()->first() : null;
+
                     Transaction::create([
                         'account_id' => $account->id,
                         'amount' => rand(10, 1000),
                         'status' => ['pending', 'completed', 'failed'][rand(0, 2)],
-                        'recipient' => "Recipient $m",
+                        'recipient_name' => $recipient ? $recipient->name : 'Unknown',
+                        'recipient_account' => $recipientAccount ? $recipientAccount->account_number : 'N/A',
                         'transaction_number' => Str::random(20),
                     ]);
                 }

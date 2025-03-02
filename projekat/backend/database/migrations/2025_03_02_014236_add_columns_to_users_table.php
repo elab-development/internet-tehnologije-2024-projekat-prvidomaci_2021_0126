@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->date('date_of_birth')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
-            $table->enum('work_status', ['underaged', 'unemployed', 'employed', 'retired'])->nullable();
+            $table->enum('work_status', ['unemployed', 'student', 'employed', 'retired'])->nullable();
             $table->string('street')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();

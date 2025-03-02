@@ -5,7 +5,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 
 function NewTransaction({accounts, updateAccountBalance,transactions, setTransactions}) {
   const [recipient, setRecipient] = useState('');
-  // const [dateTime, setDateTime] = useState('');
+  const [recipientAccount, setRecipientAccount] = useState('');
   const [amount, setAmount] = useState('');
   const [newTransactions, setNewTransactions] = useLocalStorage('newTransactions', '');
   const navigate = useNavigate(); //hook za dinamicko rutiranje, bez koriscenja <Link> klase
@@ -13,7 +13,7 @@ function NewTransaction({accounts, updateAccountBalance,transactions, setTransac
   const handleSubmit = (e) => {
     e.preventDefault() // da se ne bi refreshovala stranica kada kliknem submit
 
-    if (!recipient || !amount) {
+    if (!recipient || !amount ||!recipientAccount) {
       alert('Please fill out all fields.');
       return;
     }
@@ -50,6 +50,18 @@ function NewTransaction({accounts, updateAccountBalance,transactions, setTransac
             type="text"
             id="recipient"
             value={recipient}
+            onChange={(e) => setRecipient(e.target.value)}
+            placeholder="Enter recipient name"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Recipient Account Number:</label>
+          <input
+            type="text"
+            id="recipient_account"
+            value={recipientAccount}
             onChange={(e) => setRecipient(e.target.value)}
             placeholder="Enter recipient name"
             required

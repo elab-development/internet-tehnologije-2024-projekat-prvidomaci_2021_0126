@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function Login({}) {
+function Login({setUser}) {
 
   const [userData, setUserData] = useState({
     email:"",
@@ -13,11 +13,8 @@ function Login({}) {
   const [error, setError] = useState('');
   let navigate = useNavigate();
   
-  function handleInput(e){
-      let newUserData = userData;
-      newUserData[e.target.name] = e.target.value;
-    //   console.log(e)
-      setUserData(newUserData); 
+  function handleInput(e) {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   }
 
   function handleLogin(e){
@@ -26,10 +23,11 @@ function Login({}) {
     axios.post("api/auth/login", userData).then((res) =>{
         console.log(res.data)
         if(res.data.success === true){
+          setUser(res.data.data);
             window.sessionStorage.setItem("auth_token", res.data.token);
             navigate("/");
         } else {
-          setError('Invalid email or password.'); // Set error message
+          setError('Invalid email or password.');
         }
     }).catch(e=> {
         console.log(e);

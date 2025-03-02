@@ -35,10 +35,13 @@ function Home({ user, accounts }) {
       }
     };
   
-    if (loading) {
-      return <p>Loading accounts...</p>;
-    }
-  
+    // if (loading) {
+    //   return <p>Loading accounts...</p>;
+    // }
+    // if (!accounts || accounts.length === 0) {
+    //   return <p>No accounts available.</p>;
+    // }    
+ 
     return (
       <div>
         <h1 className="welcome-heading">Welcome {user.firstName}!</h1>

@@ -25,11 +25,15 @@ function Transactions({transactions}) {
 
         <DataTable value={transactions} sortMode='multiple' filters={filters} 
         paginator rows={10} rowsPerPageOptions={[5,10,20,50]} >
+            {}
             <Column field="id" header="ID" sortable/>
-            <Column field="transactionId" header="Transaction Number" sortable/>
-            <Column field="recipient" header="Recipient" sortable/>
-            <Column field="dateTime" header="Date" sortable/>
+            <Column field="transaction_number" header="Transaction Number" sortable/>
+            <Column field="recipient_name" header="Recipient" sortable/>
+            <Column field="recipient_account" header="Recipient Account" sortable/>
+            <Column field="created_at" header="Date" sortable/>
             <Column field="amount" header="Amount" sortable/>
+            <Column field="status" header="Status" sortable/>
+
         </DataTable>
 
     </div>

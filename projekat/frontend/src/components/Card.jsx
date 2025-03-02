@@ -6,14 +6,14 @@ import '../style/Card.css';
 function Card({card}) {
 
   function getPaymentType(){
-    if(card.paymentType === "visa") return visa;
-    if(card.paymentType === "mastercard") return mastercard;
+    if(card.payment_type === "visa") return visa;
+    if(card.payment_type === "mastercard") return mastercard;
     return null;
   }
   function getCardType(){
-    if(card.cardType === "credit") return "Credit Card";
-    if(card.cardType === "debit") return "Debit Card";
-    if(card.cardType === "prepaid") return "Prepaid Card";
+    if(card.card_type === "credit") return "Credit Card";
+    if(card.card_type === "debit") return "Debit Card";
+    if(card.card_type === "prepaid") return "Prepaid Card";
     return null;
   }
 
@@ -23,10 +23,10 @@ function Card({card}) {
       
       <div className='card-details'>
         <p>{getCardType()}</p>
-        <p>Number: {card.cardNumber}</p>
-        <p>Expiry Date: {card.expiryDate}</p>
+        <p>Number: {card.card_number}</p>
+        <p>Expiry Date: {card.expiry_date}</p>
         <p>CVV: {card.cvv}</p>
-        <p>Linked account: {card.account}</p>
+        <p>Linked account: {card.account_id}</p>
       </div>
     </div>
   )

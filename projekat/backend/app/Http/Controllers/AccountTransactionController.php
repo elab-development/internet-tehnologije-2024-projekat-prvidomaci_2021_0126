@@ -18,7 +18,7 @@ class AccountTransactionController extends Controller
         }
 
         $transactions = $accounts->flatMap(function ($account) {
-            return $account->cards;
+            return $account->transactions;
         });
 
         if ($transactions->isEmpty()) {

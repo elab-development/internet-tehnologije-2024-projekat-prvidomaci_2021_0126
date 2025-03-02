@@ -4,11 +4,17 @@ import { FiPlus } from 'react-icons/fi';
 import '../style/NavBar.css';
 import axios from 'axios';
 
-function NavBar() {
+function NavBar({setUser,setAccounts,setCards,setTransactions}) {
 
   const navigate = useNavigate();
   function handleLogout(){
-    
+    window.sessionStorage.removeItem("auth_token");
+    navigate('/');
+    setUser(null);
+    setAccounts([]);
+    setCards([]);
+    setTransactions([]);
+
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -21,8 +27,6 @@ function NavBar() {
     axios.request(config)
     .then((response) => {
       console.log(JSON.stringify(response.data));
-      window.sessionStorage.removeItem("auth_token");
-      navigate('/');
     })
     .catch((error) => {
       console.log(error);

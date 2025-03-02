@@ -8,28 +8,26 @@ const Profile = ({ user }) => {
 
       <div className="profile-section">
         <h3>Personal Data</h3>
-        <p><strong>Name:</strong> {user.firstName} {user.lastName}</p>
-        <p><strong>Username:</strong> {user.username}</p>
-        <p><strong>Age:</strong> {user.age}</p>
-        <p><strong>Date of Birth:</strong> {user.dateOfBirth}</p>
+        <p><strong>Name:</strong> {user.name}</p>
+        {/* <p><strong>Age:</strong> {user.age}</p> */}
+        <p><strong>Date of Birth:</strong> {user.date_of_birth}</p>
         <p><strong>Gender:</strong> {user.gender}</p>
         
-        <p><strong>University:</strong> {user.university}</p>
-        <p><strong>Work Status:</strong> {user.workStatus}</p>
+        <p><strong>Work Status:</strong> {user.work_status}</p>
       </div>
 
       <div className="profile-section">
         <h3>Address</h3>
-        <p><strong>Street:</strong> {user.address[0].street}</p>
-        <p><strong>City:</strong> {user.address[0].city}</p>
-        <p><strong>Country:</strong> {user.address[0].country}</p>
-        <p><strong>Postal Code:</strong> {user.address[0].postalCode}</p>
+        <p><strong>Street:</strong> {user.street}</p>
+        <p><strong>City:</strong> {user.city}</p>
+        <p><strong>Country:</strong> {user.country}</p>
+        <p><strong>Postal Code:</strong> {user.postal_code}</p>
       </div>
 
       <div className="profile-section profile-contact">
         <h3>Contact</h3>
         <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Phone:</strong> {user.phone}</p>
+        <p><strong>Phone:</strong> {user.phone_number}</p>
       </div>
     </div>
   );
