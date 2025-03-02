@@ -131,6 +131,45 @@ class AuthController extends Controller
         }
     }
 
+    public function forgotPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error! Make sure new password is at least 8 characters long!',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $user = User::where('name', $request->name)
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found or credentials do not match.',
+            ], 404);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password updated successfully.',
+        ], 200);
+    }
+
+
+
+
     /**
      * Login The Admin
      * @param Request $request

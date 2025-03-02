@@ -22,6 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'date_of_birth',
+        'gender',
+        'work_status',
+        'street',
+        'city',
+        'country',
+        'postal_code',
+        'phone_number',
     ];
 
     /**
@@ -47,8 +55,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function accounts(){
+    public function accounts()
+    {
         return $this->hasMany(Account::class);
     }
-
 }

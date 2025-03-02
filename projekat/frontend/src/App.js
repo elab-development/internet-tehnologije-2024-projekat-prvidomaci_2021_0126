@@ -11,6 +11,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './pages/ProtectedRoute';
+import ForgottenPassword from './pages/ForgottenPassword';
 
 function App() {
 
@@ -335,6 +336,7 @@ function App() {
 
           <Route path='/login' element= {<Login/>}/>
           <Route path='/register' element= {<Register/>}/>
+          <Route path='/forgotten_password' element= {<ForgottenPassword/>}/>
 
           <Route element={<ProtectedRoute/>}>
 

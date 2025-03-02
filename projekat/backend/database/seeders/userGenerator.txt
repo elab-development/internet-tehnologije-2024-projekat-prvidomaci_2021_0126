@@ -1,0 +1,59 @@
+use App\Models\User;
+use App\Models\Account;
+use App\Models\Card;
+use App\Models\Transaction;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+
+$defaultPassword = 'password123';
+
+        for ($i = 1; $i <= 5; $i++) {
+
+            $user = User::create([
+                'name' => "User $i",
+                'email' => "user$i@gmail.com",
+                'password' => Hash::make($defaultPassword),
+                'date_of_birth' => Carbon::now()->subYears(rand(18, 60))->format('Y-m-d'),
+                'gender' => rand(0, 1) ? 'male' : 'female',
+                'work_status' => ['underaged', 'unemployed', 'employed', 'retired'][rand(0, 3)],
+                'street' => "Street $i",
+                'city' => "City $i",
+                'country' => "Country $i",
+                'postal_code' => "1100$i",
+                'phone_number' => "+38169123456$i",
+            ]);
+
+            for ($j = 1; $j <= 3; $j++) {
+                $account = Account::create([
+                    'user_id' => $user->id,
+                    'account_number' => Str::random(16),
+                    'currency' => 'USD',
+                    'balance' => rand(1000, 10000),
+                    'is_active' => true,
+                ]);
+
+                for ($k = 1; $k <= 3; $k++) {
+                    Card::create([
+                        'account_id' => $account->id,
+                        'card_number' => Str::random(16),
+                        'expiry_date' => Carbon::now()->addYears(3)->format('m/y'), // Expiry date 3 years from now
+                        'cvv' => rand(100, 999),
+                        'card_type' => ['credit', 'debit', 'prepaid'][rand(0, 2)],
+                        'payment_type' => ['visa', 'mastercard'][rand(0, 1)],
+                    ]);
+                }
+
+                for ($m = 1; $m <= 15; $m++) {
+                    Transaction::create([
+                        'account_id' => $account->id,
+                        'amount' => rand(10, 1000),
+                        'status' => ['pending', 'completed', 'failed'][rand(0, 2)],
+                        'recipient' => "Recipient $m",
+                        'transaction_number' => Str::random(20),
+                    ]);
+                }
+            }
+        }
+
+        echo "Success! \n";

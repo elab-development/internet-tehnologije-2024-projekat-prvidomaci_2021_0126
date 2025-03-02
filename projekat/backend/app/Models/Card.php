@@ -15,10 +15,12 @@ class Card extends Model
         'expiry_date',
         'cvv',
         'account_id',
+        'card_type',
+        'payment_type',
     ];
 
-    public function account(){
+    public function account()
+    {
         return $this->belongsTo(Account::class);
     }
-
 }

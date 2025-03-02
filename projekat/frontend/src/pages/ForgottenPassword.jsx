@@ -3,14 +3,16 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-function Login({}) {
+function ForgottenPassword({}) {
 
   const [userData, setUserData] = useState({
+    name:"",
     email:"",
     password: "",
   })  
 
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   let navigate = useNavigate();
   
   function handleInput(e){
@@ -20,30 +22,43 @@ function Login({}) {
       setUserData(newUserData); 
   }
 
-  function handleLogin(e){
-    e.preventDefault(); setError('');
+  function handleSubmit(e){
+    e.preventDefault(); setError(''); setSuccess('');
 
-    axios.post("api/auth/login", userData).then((res) =>{
+    axios.post("api/auth/forgot-password",userData).then(res =>{
         console.log(res.data)
         if(res.data.success === true){
-            window.sessionStorage.setItem("auth_token", res.data.token);
-            navigate("/");
+            setSuccess('Password updated successfully!');
+            setTimeout(() => {navigate('/login')}, 1500);
         } else {
-          setError('Invalid email or password.'); // Set error message
+            setError(res.data.message || 'An error occurred.');
         }
-    }).catch(e=> {
-        console.log(e);
-        setError('Incorrect input of login credentials.');
-    });
-  }
+    }).catch(error => {
+        console.error(error);
+        setError(error.response?.data?.message || 'An error occurred. Please try again.');
+    })
+
+    }
 
   return (
     <div>
 
-    <h2>Log In</h2>
+    <h2>Fill in your credentials</h2>
     <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>
-      <form onSubmit={handleLogin}>
+    <div style={{ color: 'green', marginBottom: '10px' }}>{success}</div>
+      <form onSubmit={handleSubmit}>
 
+
+        <div >
+          <label>Name: </label>
+          <input
+            type="name"
+            placeholder="Enter a valid username"
+            required
+            name='name'
+            onInput={(e) => handleInput(e)}
+          />
+        </div>
 
         <div >
           <label>Email: </label>
@@ -57,7 +72,8 @@ function Login({}) {
         </div>
 
         <div >
-          <label>Password: </label>
+          <h4>Choose your new password:</h4>  
+          <label>New Password: </label>
           <input
             type="password"
             placeholder="Enter password"
@@ -67,13 +83,11 @@ function Login({}) {
           />
           </div>
       
-      <button type="submit" className="submit-button">Login</button>
+      <button type="submit" className="submit-button">Change password</button>
       </form>
 
-      <div><Link to="/register">Register</Link></div>
-      <div><Link to="/forgotten_password">Forgotten password?</Link></div>
     </div>
   )
 }
 
-export default Login
+export default ForgottenPassword

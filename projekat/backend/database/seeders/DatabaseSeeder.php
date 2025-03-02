@@ -19,13 +19,9 @@ class DatabaseSeeder extends Seeder
     {
         //ako hoces da izgenerises brda objekata za sve modele
         //$this->call(UserAccountCardTransactionSeeder::class);
-        
+
         User::truncate();
         Account::truncate();
         Card::truncate();
-        Transaction::truncate();
-
-        
-
     }
 }

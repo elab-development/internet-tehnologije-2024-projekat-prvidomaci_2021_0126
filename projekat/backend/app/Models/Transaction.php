@@ -15,10 +15,12 @@ class Transaction extends Model
         'amount',
         'status',
         'account_id',
+        'recipient',
+        'transaction_number',
     ];
 
-    public function account(){
+    public function account()
+    {
         return $this->belongsTo(Account::class);
     }
-
 }
