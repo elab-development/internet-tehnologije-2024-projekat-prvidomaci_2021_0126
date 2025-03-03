@@ -23,10 +23,11 @@ function Card({card}) {
       
       <div className='card-details'>
         <p>{getCardType()}</p>
+        <p>Linked to: {card.user_name}</p>
         <p>Number: {card.card_number}</p>
         <p>Expiry Date: {card.expiry_date}</p>
         <p>CVV: {card.cvv}</p>
-        <p>Linked account: {card.account_id}</p>
+        <p>Linked account: {card.account_number}</p>
       </div>
     </div>
   )

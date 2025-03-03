@@ -8,6 +8,7 @@ function NavBar({setUser,setAccounts,setCards,setTransactions}) {
 
   const navigate = useNavigate();
   function handleLogout(){
+    // removing token and data in this part so logout becomes faster
     window.sessionStorage.removeItem("auth_token");
     navigate('/');
     setUser(null);

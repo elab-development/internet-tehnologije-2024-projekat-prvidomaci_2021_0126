@@ -14,6 +14,7 @@ function Transactions({transactions}) {
         global:{value:null, matchMode: FilterMatchMode.CONTAINS},
     });
 
+    const sortedTransactions = [...transactions].sort((a, b) => a.id - b.id);
   return (
     <div>
 
@@ -23,10 +24,10 @@ function Transactions({transactions}) {
         
         />
 
-        <DataTable value={transactions} sortMode='multiple' filters={filters} 
-        paginator rows={10} rowsPerPageOptions={[5,10,20,50]} >
+        <DataTable value={sortedTransactions} sortMode='multiple' filters={filters} 
+        paginator rows={10} rowsPerPageOptions={[5,10,20,50]} sortField='id' sortOrder={1}>
             {}
-            <Column field="id" header="ID" sortable/>
+            {/* <Column field="id" header="ID" sortable/> */}
             <Column field="transaction_number" header="Transaction Number" sortable/>
             <Column field="recipient_name" header="Recipient" sortable/>
             <Column field="recipient_account" header="Recipient Account" sortable/>

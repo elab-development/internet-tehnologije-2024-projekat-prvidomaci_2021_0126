@@ -22,7 +22,6 @@ class AuthController extends Controller
     public function createUser(Request $request)
     {
         try {
-            // Validation rules for all fields
             $validateUser = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
@@ -37,7 +36,6 @@ class AuthController extends Controller
                 'phone_number' => 'required|string|max:20',
             ]);
 
-            // Return validation errors if any
             if ($validateUser->fails()) {
                 return response()->json([
                     'success' => false,
@@ -46,11 +44,10 @@ class AuthController extends Controller
                 ], 422); // Use 422 for validation errors
             }
 
-            // Create the user with all fields
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'password' => Hash::make($request->password), // Hash facade automatically encrypts the password!
                 'date_of_birth' => $request->date_of_birth,
                 'gender' => $request->gender,
                 'work_status' => $request->work_status,
@@ -61,7 +58,6 @@ class AuthController extends Controller
                 'phone_number' => $request->phone_number,
             ]);
 
-            // Return success response
             return response()->json([
                 'data' => $user,
                 'success' => true,
@@ -69,7 +65,6 @@ class AuthController extends Controller
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
             ], 200);
         } catch (\Throwable $th) {
-            // Handle exceptions
             return response()->json([
                 'success' => false,
                 'message' => $th->getMessage(),
@@ -226,9 +221,6 @@ class AuthController extends Controller
                 'token' => $admin->createToken('Admin Token')->plainTextToken,
             ], 200);
         } catch (\Throwable $th) {
-            // Log the exception to debug further
-
-
             return response()->json([
                 'success' => false,
                 'message' => 'Internal Server Error',
@@ -256,7 +248,7 @@ class AuthController extends Controller
             $admin = Admin::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'password' => Hash::make($request->password), // Hash facade automatically encrypts the password!
             ]);
 
             return response()->json([
@@ -290,10 +282,6 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
-
-
-
 
 
 
@@ -366,7 +354,7 @@ class AuthController extends Controller
             $manager = Manager::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'password' => Hash::make($request->password), // Hash facade automatically encrypts the password!
             ]);
 
             return response()->json([

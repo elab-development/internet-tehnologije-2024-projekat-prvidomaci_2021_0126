@@ -7,7 +7,6 @@ import NewTransaction from './pages/NewTransaction';
 import Transactions from './pages/Transactions';
 import Profile from './pages/Profile';
 import Breadcrumbs from './components/Breadcrumbs';
-import useLocalStorage from './hooks/useLocalStorage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './pages/ProtectedRoute';
@@ -97,16 +96,6 @@ function App() {
     fetchTransactionsData();
     fetchCardsData();
   },[window.sessionStorage.getItem("auth_token")]);
-
-
-  const updateAccountBalance = (accountId, amount) => {
-    setAccounts(prevAccounts => prevAccounts.map(account => {
-      if (account.id === accountId) {
-        return {...account, balance: account.balance - amount};
-      }
-      return account;
-    }));
-  };
 
   return (
     <div className="App">    
