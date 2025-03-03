@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountCardController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountTransactionController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CurrencyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -12,6 +13,11 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CardController;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+
+// I
+// I
+// V cmd command for log info and debugging
+// tail -f storage/logs/laravel.log
 
 
 Route::get('/user', function (Request $request) {
@@ -23,6 +29,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::get('/exchange-rates', [CurrencyController::class, 'getExchangeRates']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -47,7 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
         return response()->json($data);
     });
-
     Route::post('/delete-card', [CardController::class, 'destroy']);
 
     Route::post('/new-transaction', [TransactionController::class, 'store']);

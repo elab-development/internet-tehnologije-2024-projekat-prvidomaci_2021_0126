@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('recipient_name')->nullable();
             $table->string('recipient_account')->nullable();
             $table->string('transaction_number', 36)->unique();
+            $table->string('currency', 3)->nullable();
+            $table->string('amount_in_usd')->nullable();
         });
     }
 
@@ -27,6 +29,8 @@ return new class extends Migration
             $table->dropColumn('recipient_name');
             $table->dropColumn('recipient_account');
             $table->dropColumn('transaction_number');
+            $table->dropColumn('currency');
+            $table->dropColumn('amount_in_usd');
         });
     }
 };

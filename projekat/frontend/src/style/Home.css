@@ -85,21 +85,21 @@
 
 
 .account-chart-container {
-  display: flex; /* Aligns items horizontally */
-  justify-content: space-between; /* Spaces them apart */
-  align-items: flex-start; /* Aligns content to the top */
-  width: 100%; /* Takes full width */
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  width: 100%; 
   padding: 20px;
 }
 
 .info-container {
   display: flex;
-  flex-direction: column; /* Stack text + account vertically */
-  width: 40%; /* Makes this section smaller */
+  flex-direction: column; 
+  width: 45%; 
 }
 
 .chart-container {
-  width: 65%; /* Allows the chart to take more space */
+  width: 65%; 
   display: flex;
   flex-direction: column;
   align-items: center;

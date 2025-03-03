@@ -29,10 +29,12 @@ function Transactions({transactions}) {
             {}
             {/* <Column field="id" header="ID" sortable/> */}
             <Column field="transaction_number" header="Transaction Number" sortable/>
+            <Column field="amount_in_usd" header="Subtracted from Account" sortable/>
             <Column field="recipient_name" header="Recipient" sortable/>
             <Column field="recipient_account" header="Recipient Account" sortable/>
             <Column field="created_at" header="Date" sortable/>
             <Column field="amount" header="Amount" sortable/>
+            <Column field="currency" header="Currency" sortable/>
             <Column field="status" header="Status" sortable/>
 
         </DataTable>

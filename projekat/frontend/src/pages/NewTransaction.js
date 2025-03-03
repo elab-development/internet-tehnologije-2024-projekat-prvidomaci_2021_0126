@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/NewTransaction.css'; 
 import axios from 'axios';
@@ -9,8 +9,31 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
   const [amount, setAmount] = useState('');
   const [selectedAccount, setSelectedAccount] = useState('');
   const [error, setError] = useState('');
+  const [currencies, setCurrencies] = useState([]);
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [exchangeRates, setExchangeRates] = useState({});
 
   const navigate = useNavigate(); //hook za dinamicko rutiranje, bez koriscenja <Link> klase
+
+  useEffect(() => {
+    const fetchExchangeRates = async () => {
+        try {
+            const response = await axios.get('/api/exchange-rates');
+            console.log('Exchange rates:', response.data);
+            if (response.data.success) {
+                setCurrencies(Object.keys(response.data.rates));
+                setExchangeRates(response.data.rates);
+            }
+            else {
+                console.error('Failed to fetch exchange rates:', response.data.message);
+            }
+        } catch (error) {
+            console.error('Error fetching exchange rates:', error);
+        }
+    };
+
+    fetchExchangeRates();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,11 +50,18 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
   
     try {
       const authToken = window.sessionStorage.getItem("auth_token");
+
+      const amountInUSD = selectedCurrency === 'USD'
+                        ? amount
+                        : (amount / exchangeRates[selectedCurrency]).toFixed(2);
+
       const response = await axios.post('/api/new-transaction', {
         account_id: selectedAccount,
         recipient_account: recipientAccount,
         recipient_name: recipient,
+        amount_in_usd: amountInUSD,
         amount: amount,
+        currency: selectedCurrency,
       }, {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -129,6 +159,21 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             required
           />
         </div>
+
+        <div className="form-group">
+          <label>Currency:</label>
+          <select
+            value={selectedCurrency}
+            onChange={(e) => setSelectedCurrency(e.target.value)}
+            required
+          >
+          {currencies.map((currency) => (
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
+          ))}
+          </select>
+        </div>    
 
 
         <button type="submit" className="submit-button">Submit</button>

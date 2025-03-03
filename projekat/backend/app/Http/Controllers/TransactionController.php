@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class TransactionController extends Controller
 {
@@ -39,6 +40,8 @@ class TransactionController extends Controller
             'recipient_account' => 'required|string',
             'recipient_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0.5',
+            'amount_in_usd' => 'required|numeric',
+            'currency' => 'required|string|size:3',
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +61,7 @@ class TransactionController extends Controller
             $fromAccount = Account::findOrFail($request->account_id);
 
             // sufficient fund check
-            if ($fromAccount->balance < $request->amount) {
+            if ($fromAccount->balance < $request->amount_in_usd) {
                 Log::error('Insufficient funds:', ['account_id' => $request->account_id, 'balance' => $fromAccount->balance, 'amount' => $request->amount]);
                 return response()->json([
                     'success' => false,
@@ -67,7 +70,7 @@ class TransactionController extends Controller
             }
 
             //subtracting money if theres sufficient funds
-            $fromAccount->balance -= $request->amount;
+            $fromAccount->balance -= $request->amount_in_usd;
             $fromAccount->save();
             Log::info('Sender account updated:', ['account_id' => $request->account_id, 'new_balance' => $fromAccount->balance]);
 
@@ -77,7 +80,7 @@ class TransactionController extends Controller
             $recipient_account = Account::where('account_number', $request->recipient_account)->first();
 
             if ($recipient_account) {
-                $recipient_account->balance += $request->amount;
+                $recipient_account->balance += $request->amount_in_usd;
                 $recipient_account->save();
                 Log::info('Recipient account updated:', ['account_id' => $recipient_account->id, 'new_balance' => $recipient_account->balance]);
             }
@@ -87,10 +90,16 @@ class TransactionController extends Controller
                 'recipient_name' => $request->recipient_name,
                 'recipient_account' => $request->recipient_account,
                 'amount' => $request->amount,
+                'amount_in_usd' => $request->amount_in_usd,
+                'currency' => $request->currency,
                 'status' => $recipient_account ? 'completed' : 'pending',
                 'transaction_number' => Str::uuid(),
             ]);
             Log::info('Transaction created:', $transaction->toArray());
+
+
+            $cacheKey = 'user_profile_' . auth()->id();
+            Cache::forget($cacheKey);
 
             DB::commit();
 

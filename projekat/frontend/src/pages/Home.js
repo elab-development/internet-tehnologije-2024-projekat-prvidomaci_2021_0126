@@ -5,7 +5,6 @@ import '../style/Home.css';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 
-// Register Chart.js components
 Chart.register(...registerables);
 
 function Home({ user, accounts }) {
@@ -14,7 +13,6 @@ function Home({ user, accounts }) {
 
     const totalBalance = accounts.reduce((sum, account) => sum + parseFloat(account.balance), 0);
 
-    // Prepare data for the chart
     const chartData = {
         labels: accounts.map(account => account.account_number),
         datasets: [{
@@ -46,7 +44,7 @@ function Home({ user, accounts }) {
             },
             title: {
                 display: true,
-                text: 'Account Balances (Doughnut Chart)',
+                text: 'Account Balances',
             },
         },
     };
@@ -81,7 +79,6 @@ function Home({ user, accounts }) {
     return (
         <div>
             <div className="account-chart-container">
-                {/* Left side (Welcome text + Account) */}
                 <div className="info-container">
                     <h1 className="welcome-heading">Welcome {user.name}!</h1>
                     <Link to="/profile" className="profile-link">Profile Info</Link>
@@ -92,8 +89,6 @@ function Home({ user, accounts }) {
                         <p>No accounts available.</p>
                     )}
                 </div>
-
-                {/* Right side (Chart) */}
                 <div className="chart-container">
                     <Doughnut data={chartData} options={chartOptions} />
                     <div className="total-balance">

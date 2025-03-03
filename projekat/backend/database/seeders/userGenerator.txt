@@ -45,17 +45,18 @@ $defaultPassword = 'password123';
                 }
 
                 for ($m = 1; $m <= 15; $m++) {
-                    // Pick a random recipient user different from sender
                     $recipient = User::where('id', '!=', $user->id)->inRandomOrder()->first();
                     $recipientAccount = $recipient ? $recipient->accounts()->inRandomOrder()->first() : null;
-
+                    $randomAmount = rand(10,1000);
                     Transaction::create([
                         'account_id' => $account->id,
-                        'amount' => rand(10, 1000),
+                        'amount' => $randomAmount,
+                        'amount_in_usd' => $randomAmount,
                         'status' => ['pending', 'completed', 'failed'][rand(0, 2)],
                         'recipient_name' => $recipient ? $recipient->name : 'Unknown',
                         'recipient_account' => $recipientAccount ? $recipientAccount->account_number : 'N/A',
                         'transaction_number' => Str::random(20),
+                        'currency' => 'USD'
                     ]);
                 }
             }
