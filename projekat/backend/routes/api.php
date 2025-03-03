@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CardController;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 
 Route::get('/user', function (Request $request) {
@@ -22,13 +25,30 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
     Route::get('/profile', function (Request $request) {
-        $data = auth()->user()->load('accounts');
-        return response()->json([
-            'message' => "Welcome to user profile",
-            'user-data' => $data
-        ]);
+        $cacheKey = 'user_profile_' . auth()->id();
+        Log::info('Cache key: ' . $cacheKey);
+
+        if (Cache::has($cacheKey)) {
+            Log::info('Fetching profile data from cache for user ' . auth()->id());
+        } else {
+            Log::info('Fetching profile data from database for user ' . auth()->id());
+        }
+
+        /*cuvanje je u sekundama, zato 60 min * 60 sek/min*/
+        $data = Cache::remember($cacheKey, 60 * 60, function () use ($request) {
+            $user = auth()->user()->load('accounts');
+            return [
+                'message' => "Welcome to user profile",
+                'user-data' => $user,
+            ];
+        });
+
+        return response()->json($data);
     });
+
+    Route::post('/delete-card', [CardController::class, 'destroy']);
 
     Route::post('/new-transaction', [TransactionController::class, 'store']);
     Route::post('/transactions', [TransactionController::class, 'index']);

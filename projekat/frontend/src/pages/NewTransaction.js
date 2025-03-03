@@ -125,7 +125,7 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Enter amount"
             min="0"
-            step="0.01"
+            step="0.1"
             required
           />
         </div>

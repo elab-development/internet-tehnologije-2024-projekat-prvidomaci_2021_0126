@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class AccountController extends Controller
 {
@@ -22,12 +23,17 @@ class AccountController extends Controller
 
     public function index(Request $request)
     {
-        $query = Account::query();
-        //kesiranje 
-        $accounts = Cache::remember('accounts', 10, function () use ($query) {
-            return $query->paginate(20);
+        if (Cache::has('accounts')) {
+            Log::info('Fetching accounts from cache.');
+        } else {
+            Log::info('Fetching accounts from database.');
+        }
+
+        // Use Cache::remember to cache the results for 10 minutes
+        $accounts = Cache::remember('accounts', 10, function () {
+            return Account::paginate(20); // Paginate the results
         });
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Accounts fetched.',
@@ -63,18 +69,17 @@ class AccountController extends Controller
 
         $account = Account::create([
             'account_number' => $request->account_number,
-            'currency' => strtoupper($request->currency), 
+            'currency' => strtoupper($request->currency),
             'balance' => $request->balance,
             'is_active' => $request->is_active,
             'user_id' => Auth::user()->id,
         ]);
-    
-        
+
+
         return response()->json([
             'message' => 'Account created successfully.',
             'data' => $account,
-        ], 201); 
-
+        ], 201);
     }
 
     /**
@@ -98,24 +103,27 @@ class AccountController extends Controller
      */
     public function update(Request $request, Account $account)
     {
-
         $validator = Validator::make($request->all(), [
             'account_number' => 'required|string|size:16|unique:accounts,account_number,' . $account->id,
             'currency' => 'required|string|size:3',
             'balance' => 'required|numeric|min:0|max:20000',
             'is_active' => 'required|boolean',
+            //'is_active' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422); 
+            return response()->json($validator->errors(), 422);
         }
 
+
         $account->account_number = $request->account_number;
-        $account->currency = strtoupper($request->currency); 
+        $account->currency = strtoupper($request->currency);
         $account->balance = $request->balance;
         $account->is_active = $request->is_active;
 
-        $account->save();    
+        $account->save();
+        //$account->update(['is_active' => $request->is_active]);
+
         return response()->json([
             'message' => 'Account updated successfully.',
             'data' => new AccountResource($account),

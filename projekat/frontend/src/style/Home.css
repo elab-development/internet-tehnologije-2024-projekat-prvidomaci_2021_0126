@@ -35,11 +35,12 @@
   }
 
 
-.account-nav-buttons {
-    margin: 20px 0;
+  .account-nav-buttons {
+    margin-left: 25px;
+    margin-top: -120px;
     display: flex;
     gap: 10px;
-    justify-content: center;
+    justify-content: left;
   }
   
   .account-button {
@@ -64,3 +65,43 @@
     transition: all 0.1s ease;
   }
   
+
+.chart-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.total-balance {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #333;
+}
+
+
+.account-chart-container {
+  display: flex; /* Aligns items horizontally */
+  justify-content: space-between; /* Spaces them apart */
+  align-items: flex-start; /* Aligns content to the top */
+  width: 100%; /* Takes full width */
+  padding: 20px;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column; /* Stack text + account vertically */
+  width: 40%; /* Makes this section smaller */
+}
+
+.chart-container {
+  width: 65%; /* Allows the chart to take more space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

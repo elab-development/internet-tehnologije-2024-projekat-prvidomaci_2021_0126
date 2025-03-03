@@ -1,9 +1,10 @@
 .account-card {
     background-color: #F5EFE7;
     border-radius: 10px;
+
     padding: 20px;
     margin: 20px 0;
-    box-shadow: 0 4px 8px rgba(33, 53, 85, 0.1);
+    box-shadow: 5px 10px 8px  rgba(33, 53, 85, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: fadeIn 0.5s ease-in;
   }

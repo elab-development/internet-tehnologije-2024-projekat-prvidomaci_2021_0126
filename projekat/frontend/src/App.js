@@ -17,8 +17,8 @@ function App() {
   
   const [user, setUser] = useState(null);
   const [accounts, setAccounts] = useState([]);
-  const [transactions,setTransactions] = useState();
-  const [cards, setCards] = useState();
+  const [transactions,setTransactions] = useState([]);
+  const [cards, setCards] = useState([]);
   
   //fetching data for these 4 states
   useEffect( () => {
@@ -110,7 +110,6 @@ function App() {
           <Route element={<ProtectedRoute/>}>
 
             <Route path="/" element={<>
-              <Breadcrumbs />
               <Home user={user} accounts={accounts} />
             </>}>
             </Route>
@@ -139,6 +138,8 @@ function App() {
           </Route>
 
           {/* uz ovo, koju god rutu (cak i pogresnu) korisnik da ukuca, uvek ga vodi ka login page ako nije logged */}
+          {/* routes/api.php i ovaj element omogucavaju zastitu od IDOR napada, jer nijedan neautorizovan korisnik ne moze da 
+          pristupa rutama koje mu nisu dozvoljene */}
           <Route path="*" element={<Navigate to="/login" replace />} />
 
           </Routes>
