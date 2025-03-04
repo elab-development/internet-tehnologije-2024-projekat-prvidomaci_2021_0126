@@ -101,7 +101,7 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
 
   return (
     <div className="new-transaction-container">
-      <h2>Create New Transaction</h2>
+      <h2>Create a new Transaction</h2>
       <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>
       <form onSubmit={handleSubmit} className="new-transaction-form">
         

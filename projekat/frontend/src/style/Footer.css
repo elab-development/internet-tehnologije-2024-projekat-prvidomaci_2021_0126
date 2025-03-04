@@ -1,0 +1,21 @@
+.footer {
+    background-color: #F5EFE7; /* Dark blue background */
+    color: #3E5879; /* Light cream text */
+    text-align: center;
+    padding: 5px 0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+    margin: 0;
+}
+
+a{
+    color: #3E5879;
+    text-decoration: none;
+}

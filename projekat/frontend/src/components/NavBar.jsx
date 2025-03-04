@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiPlus } from 'react-icons/fi';
 import '../style/NavBar.css';
+
 import axios from 'axios';
 
 function NavBar({setUser,setAccounts,setCards,setTransactions}) {
@@ -51,6 +52,7 @@ function NavBar({setUser,setAccounts,setCards,setTransactions}) {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/cards">Cards</Link></li>
           <li><Link to="/transactions">Transactions</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/new-transaction" className="new-transaction-link"><FiPlus /></Link></li> 
           </>
          )

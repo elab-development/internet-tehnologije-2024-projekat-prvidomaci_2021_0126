@@ -22,6 +22,13 @@ class Transaction extends Model
         'transaction_number',
     ];
 
+    protected $dates = ['created_at'];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('Y-m-d'); // format yyyy-mm-dd
+    }
+
     public function account()
     {
         return $this->belongsTo(Account::class);

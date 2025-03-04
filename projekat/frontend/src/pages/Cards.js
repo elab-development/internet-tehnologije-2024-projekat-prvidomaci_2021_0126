@@ -3,7 +3,7 @@ import Card from '../components/Card';
 import '../style/Cards.css';
 import axios from 'axios';
 
-function Cards({cards, setCards}) {
+function Cards({cards, setCards, fetchCards}) {
     const [isManaging, setIsManaging] = useState(false);
 
     const handleDeleteCard = async (cardId) => {
@@ -16,12 +16,10 @@ function Cards({cards, setCards}) {
           });
 
           if (response.status === 200) {
-              alert('Card deleted successfully!');
               setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
           }
       } catch (error) {
           console.error('Error deleting card:', error);
-          alert('Failed to delete card.');
       }
   };
 

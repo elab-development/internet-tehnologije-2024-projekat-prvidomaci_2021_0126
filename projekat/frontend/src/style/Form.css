@@ -1,0 +1,177 @@
+/* Shared styles for Login and Register pages */
+.auth-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #F5EFE7; /* Light background */
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.auth-container h2 {
+    text-align: center;
+    color: #213555; /* Dark blue for headings */
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #3E5879; /* Medium blue for labels */
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px;
+    border: 2px solid #D8C4B6; /* Light brown border */
+    border-radius: 8px;
+    font-size: 14px;
+    color: #213555; /* Dark blue text */
+    background-color: #FFFFFF; /* White background for inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #3E5879; /* Medium blue on focus */
+    outline: none;
+    box-shadow: 0 0 8px rgba(62, 88, 121, 0.3); /* Subtle glow effect */
+}
+
+.submit-button,
+.login-button {
+    padding: 12px;
+    background-color: #3E5879; /* Medium blue for buttons */
+    color: #F5EFE7; /* Light text color */
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-button:hover,
+.login-button:hover {
+    background-color: #213555; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.submit-button:active,
+.login-button:active {
+    transform: translateY(0); /* Reset lift effect on click */
+}
+
+.error-message {
+    color: #dc3545; /* Red for error messages */
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.link-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.link-container a {
+    color: #3E5879; /* Medium blue for links */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.link-container a:hover {
+    color: #213555; /* Darker blue on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .auth-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .auth-container h2 {
+        font-size: 20px;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .submit-button,
+    .login-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+
+.success-message {
+    color: #28a745; 
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+
+.auth-form h4 {
+    margin: 10px 0;
+    color: #091c35; 
+    font-size: 16px;
+}
+
+/* Compact styles for the Register form */
+.register-container {
+    max-width: 500px; /* Keep the same max-width */
+    padding: 20px; /* Reduced padding */
+}
+
+.register-container .auth-form {
+    gap: 12px; /* Reduced gap between form groups */
+}
+
+.register-container .form-group {
+    gap: 6px; /* Reduced gap between label and input */
+}
+
+.register-container .form-group input,
+.register-container .form-group select {
+    padding: 8px; /* Reduced padding for inputs */
+    font-size: 13px; /* Smaller font size */
+}
+
+.register-container .form-group label {
+    font-size: 13px; /* Smaller font size for labels */
+}
+
+.register-container .submit-button {
+    padding: 10px; /* Reduced padding for the button */
+    font-size: 14px; /* Smaller font size for the button */
+}
+
+/* Address fields in a compact grid */
+.register-container .form-group input[type="text"] {
+    width: 100%; /* Full width for address fields */
+    margin-bottom: 6px; /* Reduced margin between address fields */
+}

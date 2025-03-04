@@ -1,0 +1,98 @@
+
+.transactions-container {
+    padding: 20px;
+    background-color: #f9f5f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-label {
+    font-weight: bold;
+    color: #213555;
+}
+
+.filter-input {
+    padding: 8px;
+    border: 1px solid #D8C4B6;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: #213555;
+    font-size: 14px;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #213555;
+    box-shadow: 0 0 5px rgba(33, 53, 85, 0.5);
+}
+
+
+.reset-button {
+    padding: 8px 15px;
+    background-color: #213555;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.reset-button:hover {
+    background-color: #1A2A42;
+}
+
+
+.transactions-table {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transactions-table .p-datatable-header {
+    background-color: #213555;
+    color: #FFFFFF;
+    border-radius: 10px 10px 0 0;
+    padding: 15px;
+}
+
+.transactions-table .p-datatable-thead > tr > th {
+    
+    color: #213555;
+    font-weight: bold;
+    border: none;
+}
+
+.transactions-table .p-datatable-tbody > tr {
+    background-color: #FFFFFF;
+    color: #213555;
+    transition: background-color 0.3s ease;
+}
+
+.transactions-table .p-datatable-tbody > tr:hover {
+    background-color: #f9f7f4;
+}
+
+.transactions-table .p-paginator {
+    border-radius: 0 0 10px 10px;
+    padding: 10px;
+}
+
+.transactions-table .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background-color: #213555;
+    color: #FFFFFF;
+}

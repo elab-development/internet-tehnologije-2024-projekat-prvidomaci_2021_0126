@@ -11,7 +11,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './pages/ProtectedRoute';
 import ForgottenPassword from './pages/ForgottenPassword';
+import Contact from './pages/Contact';
 import axios from 'axios';
+import Footer from './components/Footer';
 
 function App() {
   
@@ -116,7 +118,7 @@ function App() {
 
             <Route path="/cards" element={<>
               <Breadcrumbs />
-              {<Cards cards ={cards}/>}
+              {<Cards cards ={cards} setCards={setCards}/>}
               </>} 
             />
             <Route path="/transactions" element={<>
@@ -134,6 +136,10 @@ function App() {
               <Profile user={user} />
             </>} />
 
+            <Route path="/contact" element={<>
+              <Contact/>
+            </>}>
+            </Route>  
           
           </Route>
 
@@ -143,7 +149,7 @@ function App() {
           <Route path="*" element={<Navigate to="/login" replace />} />
 
           </Routes>
-          
+          <Footer />
       </BrowserRouter>
     </div>
   );

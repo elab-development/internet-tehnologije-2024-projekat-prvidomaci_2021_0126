@@ -5,6 +5,9 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Faker\Factory as Faker;
+
+$faker = Faker::create(); 
 
 $defaultPassword = 'password123';
 
@@ -53,8 +56,8 @@ $defaultPassword = 'password123';
                         'amount' => $randomAmount,
                         'amount_in_usd' => $randomAmount,
                         'status' => ['pending', 'completed', 'failed'][rand(0, 2)],
-                        'recipient_name' => $recipient ? $recipient->name : 'Unknown',
-                        'recipient_account' => $recipientAccount ? $recipientAccount->account_number : 'N/A',
+                        'recipient_name' => $faker->name,
+                        'recipient_account' => Str::random(16),
                         'transaction_number' => Str::random(20),
                         'currency' => 'USD'
                     ]);
