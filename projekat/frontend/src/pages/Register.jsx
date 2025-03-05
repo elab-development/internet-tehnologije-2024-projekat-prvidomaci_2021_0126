@@ -17,6 +17,7 @@ const Register = () => {
         postal_code: '',
         phone_number: '',
     });
+    const [error, setError] = useState('');
 
     let navigate = useNavigate();
 
@@ -36,13 +37,19 @@ const Register = () => {
                 navigate('/login');
             })
             .catch((e) => {
-                console.log(e);
+                console.error('Error creating user:', error);
+                if(userData.password.length < 8){
+                    setError('Password must be at least 8 characters long.');
+                }else{
+                    setError('An error occurred while creating the user.');
+                } 
             });
     }
 
     return (
         <div className="auth-container register-container">
             <h2>Register</h2>
+            <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>
             <form onSubmit={handleRegister} className="auth-form">
                 <div className="form-group">
                     <label>Name:</label>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('postal_code', 20)->nullable();
             $table->string('phone_number', 20)->nullable();
+            $table->string('role')->default('user');
         });
     }
 
@@ -39,6 +40,7 @@ return new class extends Migration
             $table->dropColumn('country');
             $table->dropColumn('postal_code');
             $table->dropColumn('phone_number');
+            $table->dropColumn('role');
         });
     }
 };

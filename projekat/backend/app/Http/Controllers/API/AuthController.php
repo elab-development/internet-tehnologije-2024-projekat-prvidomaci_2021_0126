@@ -41,13 +41,13 @@ class AuthController extends Controller
                     'success' => false,
                     'message' => 'Validation error',
                     'errors' => $validateUser->errors(),
-                ], 422); // Use 422 for validation errors
+                ], 422);
             }
 
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password), // Hash facade automatically encrypts the password!
+                'password' => Hash::make($request->password),
                 'date_of_birth' => $request->date_of_birth,
                 'gender' => $request->gender,
                 'work_status' => $request->work_status,
@@ -56,6 +56,7 @@ class AuthController extends Controller
                 'country' => $request->country,
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->phone_number,
+                'role' => 'user',
             ]);
 
             return response()->json([
@@ -77,7 +78,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return User
      */
-    public function loginUser(Request $request)
+    public function login(Request $request)
     {
         try {
             $validateUser = Validator::make(
@@ -96,21 +97,49 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            if (!Auth::attempt($request->only(['email', 'password']))) {
+            // checking user table first
+            $user = User::where('email', $request->email)->first();
+            if ($user && Auth::guard('web')->attempt($request->only(['email', 'password']))) {
+                $token = $user->createToken("API TOKEN")->plainTextToken;
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Email & Password does not match with our record.',
-                ], 401);
+                    'data' => $user,
+                    'success' => true,
+                    'message' => 'User Logged In Successfully',
+                    'role' => 'user',
+                    'token' => $token
+                ], 200);
+            }
+            // then admin table
+            $admin = Admin::where('email', $request->email)->first();
+            if ($admin && Auth::guard('admin')->attempt($request->only(['email', 'password']))) {
+                $token = $admin->createToken("API TOKEN")->plainTextToken;
+                return response()->json([
+                    'data' => $admin,
+                    'success' => true,
+                    'message' => 'Admin Logged In Successfully',
+                    'role' => 'admin',
+                    'token' => $token
+                ], 200);
             }
 
-            $user = User::where('email', $request->email)->first();
+            // in the end managers table
+            $manager = Manager::where('email', $request->email)->first();
+            if ($manager && Auth::guard('manager')->attempt($request->only(['email', 'password']))) {
+                $token = $manager->createToken("API TOKEN")->plainTextToken;
+                return response()->json([
+                    'data' => $manager,
+                    'success' => true,
+                    'message' => 'Manager Logged In Successfully',
+                    'role' => 'manager',
+                    'token' => $token
+                ], 200);
+            }
 
+            // if there is no user, admin or manager
             return response()->json([
-                'data' => $user,
-                'success' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+                'success' => false,
+                'message' => 'Email & Password do not match our records.',
+            ], 401);
         } catch (\Throwable $th) {
             return response()->json([
                 'success' => false,
@@ -180,8 +209,6 @@ class AuthController extends Controller
     }
 
 
-
-
     /**
      * Login The Admin
      * @param Request $request
@@ -248,7 +275,8 @@ class AuthController extends Controller
             $admin = Admin::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password), // Hash facade automatically encrypts the password!
+                'password' => Hash::make($request->password),
+                'role' => 'admin',
             ]);
 
             return response()->json([

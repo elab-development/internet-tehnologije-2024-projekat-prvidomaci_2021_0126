@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
-import '../style/Transactions.css'; // Import the CSS file
+import '../style/Transactions.css';
 
 function Transactions({ transactions }) {
     const [filters, setFilters] = useState({

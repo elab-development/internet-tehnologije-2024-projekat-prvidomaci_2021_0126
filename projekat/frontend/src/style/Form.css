@@ -1,4 +1,3 @@
-/* Shared styles for Login and Register pages */
 .auth-container {
     max-width: 500px;
     margin: 40px auto;
@@ -31,7 +30,7 @@
 .form-group label {
     font-weight: bold;
     color: #3E5879; /* Medium blue for labels */
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .form-group input,
@@ -162,7 +161,7 @@
 }
 
 .register-container .form-group label {
-    font-size: 13px; /* Smaller font size for labels */
+    font-size: 14px; /* Smaller font size for labels */
 }
 
 .register-container .submit-button {

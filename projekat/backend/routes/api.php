@@ -27,7 +27,7 @@ Route::get('/user', function (Request $request) {
 
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
-Route::post('/auth/login', [AuthController::class, 'loginUser']);
+Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('/exchange-rates', [CurrencyController::class, 'getExchangeRates']);
 
@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             $user = auth()->user()->load('accounts');
             return [
                 'message' => "Welcome to user profile",
+
                 'user-data' => $user,
             ];
         });
@@ -66,7 +67,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('auth/logout', [AuthController::class, 'logoutUser']);
 });
 
-Route::post('/admin/login', [AuthController::class, 'loginAdmin']);
 Route::post('/admin/register', [AuthController::class, 'createAdmin']);
 
 Route::group(['middleware' => ['auth:admin-api']], function () {
@@ -76,12 +76,13 @@ Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::resource('accounts', AccountController::class)->only(['index', 'show']);
 });
 
-Route::post('/manager/login', [AuthController::class, 'loginManager']);
 Route::post('/manager/register', [AuthController::class, 'createManager']);
 
 Route::group(['middleware' => ['auth:manager-api']], function () {
-    // Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    // Route::get('/users', [UserController::class, 'index'])->name('users.index');    
     Route::get('/admins', [AdminController::class, 'index']);
+    Route::post('/new-admin', [AuthController::class, 'createAdmin']);
+
+    Route::delete('/admins/{id}', [AdminController::class, 'destroy']);
+
     Route::post('manager/logout', [AuthController::class, 'logoutManager']);
 });

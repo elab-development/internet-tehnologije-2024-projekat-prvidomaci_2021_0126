@@ -1,4 +1,6 @@
 use App\Models\User;
+use App\Models\Admin;
+use App\Models\Manager;
 use App\Models\Account;
 use App\Models\Card;
 use App\Models\Transaction;
@@ -25,6 +27,7 @@ $defaultPassword = 'password123';
                 'country' => "Country $i",
                 'postal_code' => "1100$i",
                 'phone_number' => "+38169123456$i",
+                'role' => 'user',
             ]);
 
             for ($j = 1; $j <= 3; $j++) {
@@ -64,5 +67,22 @@ $defaultPassword = 'password123';
                 }
             }
         }
+
+            for ($i = 1; $i <= 5; $i++) {
+
+                $admin = Admin::create([
+                    'name' => "Admin $i",
+                    'email' => "admin$i@admin.com",
+                    'password' => Hash::make($defaultPassword),
+                    'role' => 'admin',
+                ]);
+            }
+
+            $manager = Manager::create([
+                'name' => "Manager",
+                'email' => "manager@manager.com",
+                'password' => Hash::make($defaultPassword),
+                'role' => 'manager',
+            ]);
 
         echo "Success! \n";

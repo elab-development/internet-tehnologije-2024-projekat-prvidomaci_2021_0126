@@ -24,9 +24,12 @@ function Login({ setUser }) {
         axios.post('api/auth/login', userData)
             .then((res) => {
                 if (res.data.success === true) {
-                    setUser(res.data.data);
+                    const loggedInUser = { ...res.data.data, role: res.data.role };
+                    setUser(loggedInUser);
                     window.sessionStorage.setItem('auth_token', res.data.token);
+                    window.sessionStorage.setItem('user_data', JSON.stringify(loggedInUser));
                     navigate('/');
+                    console.log(res.data);
                 } else {
                     setError('Invalid email or password.');
                 }

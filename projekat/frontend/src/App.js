@@ -14,15 +14,44 @@ import ForgottenPassword from './pages/ForgottenPassword';
 import Contact from './pages/Contact';
 import axios from 'axios';
 import Footer from './components/Footer';
+import Admins from './manager_pages/Admins';
+import NewAdmin from './manager_pages/NewAdmin';
 
 function App() {
   
-  const [user, setUser] = useState(null);
+
+  const [user, setUser] = useState(() =>{
+    const storedUser = window.sessionStorage.getItem('user_data');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [accounts, setAccounts] = useState([]);
   const [transactions,setTransactions] = useState([]);
   const [cards, setCards] = useState([]);
+  const [admins, setAdmins] = useState([]);
+
+
+  const userRoutes = <> 
+    <Route path="/" element={<> <Home user={user} accounts={accounts} /> </>} > </Route>
+    <Route path="/cards" element= {<><Breadcrumbs />{<Cards cards ={cards} setCards={setCards}/>}</>} />
+    <Route path="/transactions" element={<><Breadcrumbs />{<Transactions transactions={transactions}/> }</>} />   
+    <Route path="/new-transaction" element={<><Breadcrumbs />
+                      {<NewTransaction accounts = {accounts } setAccounts ={setAccounts}
+                      transactions={transactions} setTransactions = {setTransactions}/>}
+    </>} />
+    <Route path="/profile" element={<><Breadcrumbs /><Profile user={user} /></>} />
+    <Route path="/contact" element={<><Breadcrumbs /> <Contact/></>}>  </Route>  
+    <Route path="/admins" element={<Admins admins={admins} />}/>
+  </>
   
-  //fetching data for these 4 states
+  const adminRoutes = <>
+
+  </>
+  const managerRoutes = <>
+    <Route path="/" element={<Admins admins={admins}/>}/>
+    <Route path="/new-admin" element={<NewAdmin/>}/>
+  </>
+  
+  //fetching data for these users, accounts, transactions, cards, admins
   useEffect( () => {
 
     const authToken = window.sessionStorage.getItem("auth_token");
@@ -42,9 +71,9 @@ function App() {
       };
       
       axios.request(config).then( res =>{
-        console.log(JSON.stringify(res.data));
+        JSON.stringify(res.data);
         const userData = res.data['user-data'];
-
+        window.sessionStorage.setItem('user_data', JSON.stringify(userData));
         setUser(userData);
         setAccounts(userData.accounts);
       }).catch((error) => {
@@ -62,12 +91,17 @@ function App() {
       };
       axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        JSON.stringify(response.data);
         const transactionData = response.data['data'];
         setTransactions(transactionData);
       })
       .catch((error) => {
-        console.log("Error fetching transaction data: " +error);
+        if(axios.isAxiosError(error)){
+          console.log("No transactions found!");
+        }
+        else {
+          console.log("Error fetching transaction data: " +error);
+        }
       });
       
     }
@@ -83,26 +117,37 @@ function App() {
       
       axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        JSON.stringify(response.data);
         const cardData = response.data['data'];
         setCards(cardData);
-        console.log(cardData);
       })
       .catch((error) => {
-        console.log("Error fetching card data: " +error);
+        if(axios.isAxiosError(error)){
+          console.log("No cards found!");
+        }
+        else {
+          console.log("Error fetching card data: " +error);
+        }
       });
       
     }
-
-    fetchUserData();
-    fetchTransactionsData();
-    fetchCardsData();
+    
+    if(user.role === 'user'){
+      fetchUserData();
+      fetchTransactionsData();
+      fetchCardsData();
+    }
+    if(user.role === 'manager'){
+      return;
+    }
   },[window.sessionStorage.getItem("auth_token")]);
+
+
 
   return (
     <div className="App">    
       <BrowserRouter>
-        <NavBar setUser={setUser} setAccounts={setAccounts} setCards={setCards} setTransactions={setTransactions}/>
+        <NavBar user={user} setUser={setUser} setAccounts={setAccounts} setCards={setCards} setTransactions={setTransactions}/>
         <Routes>
 
           <Route path='/login' element= {<Login setUser={setUser}/>}/>
@@ -111,35 +156,9 @@ function App() {
 
           <Route element={<ProtectedRoute/>}>
 
-            <Route path="/" element={<>
-              <Home user={user} accounts={accounts} />
-            </>}>
-            </Route>
+          {user?.role === 'user' ? userRoutes : user?.role === 'admin' ? adminRoutes : managerRoutes}
+          
 
-            <Route path="/cards" element={<>
-              <Breadcrumbs />
-              {<Cards cards ={cards} setCards={setCards}/>}
-              </>} 
-            />
-            <Route path="/transactions" element={<>
-              <Breadcrumbs />
-              {<Transactions transactions={transactions}/> }
-            </>} />
-            <Route path="/new-transaction" element={<>
-              <Breadcrumbs />
-              {<NewTransaction accounts = {accounts } setAccounts ={setAccounts}
-                              transactions={transactions} setTransactions = {setTransactions}/>}
-            </>} />
-
-            <Route path="/profile" element={<>
-              <Breadcrumbs />
-              <Profile user={user} />
-            </>} />
-
-            <Route path="/contact" element={<>
-              <Contact/>
-            </>}>
-            </Route>  
           
           </Route>
 

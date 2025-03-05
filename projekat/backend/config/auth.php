@@ -36,37 +36,36 @@ return [
     */
 
     'guards' => [
-
         'web' => [
-                    'driver' => 'session',
-                    'provider' => 'users',
-                ],
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
 
-        'admin'=>[
-                    'driver'=> 'session',
-                    'provider'=> 'admins',
-                ],
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
 
         'admin-api' => [
-                    'driver' => 'sanctum',
-                    'provider' => 'admins',
-                ],
+            'driver' => 'sanctum',
+            'provider' => 'admins',
+        ],
 
         'manager' => [
-                    'driver' => 'session', 
-                    'provider' => 'managers',
-                ],
+            'driver' => 'session',
+            'provider' => 'managers',
+        ],
 
         'manager-api' => [
-                    'driver' => 'sanctum',
-                    'provider' => 'managers',
-                ],
-
-        'api'=> [
-                    'driver'=> 'token',
-                    'provider'=> 'users',
-                ],
+            'driver' => 'sanctum',
+            'provider' => 'managers',
         ],
+    ],
 
 
     /*
@@ -89,15 +88,17 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class,
         ],
+
         'admins' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Admin::class),
+            'model' => App\Models\Admin::class,
         ],
+
         'managers' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Manager::class),
+            'model' => App\Models\Manager::class,
         ],
     ],
 
