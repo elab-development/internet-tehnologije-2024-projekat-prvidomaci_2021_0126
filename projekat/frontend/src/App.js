@@ -16,6 +16,7 @@ import axios from 'axios';
 import Footer from './components/Footer';
 import Admins from './manager_pages/Admins';
 import NewAdmin from './manager_pages/NewAdmin';
+import AuthenticatedRoute from './pages/AuthenticatedRoute';
 
 function App() {
   
@@ -40,7 +41,8 @@ function App() {
     </>} />
     <Route path="/profile" element={<><Breadcrumbs /><Profile user={user} /></>} />
     <Route path="/contact" element={<><Breadcrumbs /> <Contact/></>}>  </Route>  
-    <Route path="/admins" element={<Admins admins={admins} />}/>
+    <Route path="*" element={<Navigate to="/" replace />} />
+    <Route path="/login" element={<Navigate to="/" replace />} />
   </>
   
   const adminRoutes = <>
@@ -49,6 +51,7 @@ function App() {
   const managerRoutes = <>
     <Route path="/" element={<Admins admins={admins}/>}/>
     <Route path="/new-admin" element={<NewAdmin/>}/>
+    <Route path="*" element={<Navigate to="/" replace />} />
   </>
   
   //fetching data for these users, accounts, transactions, cards, admins
@@ -149,11 +152,11 @@ function App() {
       <BrowserRouter>
         <NavBar user={user} setUser={setUser} setAccounts={setAccounts} setCards={setCards} setTransactions={setTransactions}/>
         <Routes>
-
-          <Route path='/login' element= {<Login setUser={setUser}/>}/>
-          <Route path='/register' element= {<Register/>}/>
-          <Route path='/forgotten_password' element= {<ForgottenPassword/>}/>
-
+          <Route element={<AuthenticatedRoute/>}>
+            <Route path='/login' element= {<Login setUser={setUser}/>}/>
+            <Route path='/register' element= {<Register/>}/>
+            <Route path='/forgotten_password' element= {<ForgottenPassword/>}/>
+          </Route>
           <Route element={<ProtectedRoute/>}>
 
           {user?.role === 'user' ? userRoutes : user?.role === 'admin' ? adminRoutes : managerRoutes}

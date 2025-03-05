@@ -26,9 +26,12 @@ Route::get('/user', function (Request $request) {
 
 
 
-Route::post('/auth/register', [AuthController::class, 'createUser']);
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::middleware('guest')->group(function () {
+    Route::post('/auth/register', [AuthController::class, 'createUser']);
+    Route::post('/auth/login', [AuthController::class, 'login']);
+    Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
+});
+
 Route::get('/exchange-rates', [CurrencyController::class, 'getExchangeRates']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
