@@ -21,6 +21,7 @@ import Users from './admin_pages/Users';
 import UserProfile from './admin_pages/UserProfile'; 
 import NewAccount from './admin_pages/NewAccount';
 import ViewCards from './admin_pages/ViewCards';
+import NewCard from './admin_pages/NewCard';
 
 function App() {
   
@@ -54,6 +55,8 @@ function App() {
     <Route path="/users/:id" element={<><Breadcrumbs /><UserProfile accounts={accounts} setAccounts={setAccounts}/> </>} />
     <Route path="/new-account/:userId" element={<><Breadcrumbs/><NewAccount/></>} />
     <Route path="/accounts/:accountId/cards" element={<><Breadcrumbs/><ViewCards cards={cards} setCards={setCards}/></>} />  
+    <Route path="/accounts/:accountId/cards/new-card" element={<><Breadcrumbs/><NewCard/></>} />
+    
     <Route path="*" element={<Navigate to="/" replace />} />
   </>
   const managerRoutes = <>

@@ -25,6 +25,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
+Route::get('/exchange-rates', [CurrencyController::class, 'getExchangeRates']);
 
 Route::middleware('guest')->group(function () {
     Route::post('/auth/register', [AuthController::class, 'createUser']);
@@ -32,7 +33,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
 });
 
-Route::get('/exchange-rates', [CurrencyController::class, 'getExchangeRates']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -66,7 +66,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/profile/cards', [AccountCardController::class, 'index'])->name('profile.cards');
     Route::get('/profile/transactions', [AccountTransactionController::class, 'index'])->name('profile.transactions');
 
-    Route::resource('/accounts', AccountController::class)->only(['update', 'store', 'destroy']);
     Route::post('auth/logout', [AuthController::class, 'logoutUser']);
 });
 
@@ -77,11 +76,13 @@ Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
-    Route::get('/accounts/{accountId}/cards', [AccountCardController::class, 'index']);
-
-    Route::post('/new-account', [AccountController::class, 'store']);
-    Route::post('admin/logout', [AuthController::class, 'logoutAdmin']);
     Route::resource('accounts', AccountController::class)->only(['index', 'show']);
+    Route::post('/new-account', [AccountController::class, 'store']);
+
+    Route::get('/accounts/{accountId}/cards', [AccountCardController::class, 'index1']);
+    Route::post('/accounts/{accountId}/cards', [CardController::class, 'store']);
+
+    Route::post('admin/logout', [AuthController::class, 'logoutAdmin']);
 });
 
 Route::post('/manager/register', [AuthController::class, 'createManager']);

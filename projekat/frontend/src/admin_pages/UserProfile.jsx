@@ -42,7 +42,7 @@ function UserProfile() {
     fetchUserProfile();
   }, [id]);
 
-  const totalBalance = accounts.reduce((sum, account) => sum + parseFloat(account.balance_in_domain), 0);
+  const totalBalance = accounts.reduce((sum, account) => sum + parseFloat(account.balance_in_usd), 0);
 
   const chartData = {
     labels: accounts.map(account => account.account_number),
@@ -111,7 +111,6 @@ function UserProfile() {
     return (
         <div className="profile-container">
           <div className="profile-data">
-            <h2 className="profile-header">Profile</h2>
       
             <div className="profile-section">
               <h3>Personal Data</h3>
@@ -134,17 +133,9 @@ function UserProfile() {
               <p><strong>Email:</strong> {user.email}</p>
               <p><strong>Phone:</strong> {user.phone_number}</p>
             </div>
-          </div>
+          
       
-          <div className="profile-accounts">
-            <div className="chart-container">
-              
-              <Doughnut data={chartData} options={chartOptions} />
-              <div className="total-balance">
-                <strong>Total Balance:</strong> ${totalBalance.toFixed(2)}
-              </div>
-            </div>
-      
+          <div className="profile-accounts">     
             <div className="account-nav-container">
               <h3>Accounts</h3>
               {currentAccount ? (
@@ -171,6 +162,14 @@ function UserProfile() {
                   <button className="account-button" onClick={() => navigate(`/new-account/${user.id}`)}>New Account</button>
                 </div>
               )}
+            </div>
+            <div className="chart-container">
+              
+              <Doughnut data={chartData} options={chartOptions} />
+              <div className="total-balance">
+                <strong>Total Balance:</strong> ${totalBalance.toFixed(2)}
+              </div>
+            </div>  
             </div>
           </div>
         </div>
