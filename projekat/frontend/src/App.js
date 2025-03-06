@@ -9,14 +9,18 @@ import Profile from './pages/Profile';
 import Breadcrumbs from './components/Breadcrumbs';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ProtectedRoute from './pages/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import ForgottenPassword from './pages/ForgottenPassword';
 import Contact from './pages/Contact';
 import axios from 'axios';
 import Footer from './components/Footer';
 import Admins from './manager_pages/Admins';
 import NewAdmin from './manager_pages/NewAdmin';
-import AuthenticatedRoute from './pages/AuthenticatedRoute';
+import AuthenticatedRoute from './components/AuthenticatedRoute';
+import Users from './admin_pages/Users';
+import UserProfile from './admin_pages/UserProfile'; 
+import NewAccount from './admin_pages/NewAccount';
+import ViewCards from './admin_pages/ViewCards';
 
 function App() {
   
@@ -29,6 +33,7 @@ function App() {
   const [transactions,setTransactions] = useState([]);
   const [cards, setCards] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
 
   const userRoutes = <> 
@@ -42,11 +47,14 @@ function App() {
     <Route path="/profile" element={<><Breadcrumbs /><Profile user={user} /></>} />
     <Route path="/contact" element={<><Breadcrumbs /> <Contact/></>}>  </Route>  
     <Route path="*" element={<Navigate to="/" replace />} />
-    <Route path="/login" element={<Navigate to="/" replace />} />
   </>
   
   const adminRoutes = <>
-
+    <Route path="/" element={<Users users={allUsers} setUsers={setAllUsers}/>}/>
+    <Route path="/users/:id" element={<><Breadcrumbs /><UserProfile accounts={accounts} setAccounts={setAccounts}/> </>} />
+    <Route path="/new-account/:userId" element={<><Breadcrumbs/><NewAccount/></>} />
+    <Route path="/accounts/:accountId/cards" element={<><Breadcrumbs/><ViewCards cards={cards} setCards={setCards}/></>} />  
+    <Route path="*" element={<Navigate to="/" replace />} />
   </>
   const managerRoutes = <>
     <Route path="/" element={<Admins admins={admins}/>}/>
@@ -135,10 +143,32 @@ function App() {
       
     }
     
+    function fetchAllUserData() {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: 'api/users',
+        headers: { 
+          'Authorization': 'Bearer ' + window.sessionStorage.getItem("auth_token"),
+        }
+      };
+    
+      axios.request(config).then(res => {
+        const allUsersData = res.data.data; // Extract the `data` array from the response
+        setAllUsers(allUsersData);
+        console.log(allUsersData);
+      }).catch((error) => {
+        console.log("Error fetching user data: " + error);
+      });
+    }
+
     if(user.role === 'user'){
       fetchUserData();
       fetchTransactionsData();
       fetchCardsData();
+    }
+    if(user.role === 'admin'){
+      fetchAllUserData();
     }
     if(user.role === 'manager'){
       return;

@@ -12,7 +12,7 @@ import '../style/Transactions.css';
 function Transactions({ transactions }) {
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        amount_in_usd: { value: 0, matchMode: FilterMatchMode.GREATER_THAN },
+        amount: { value: 0, matchMode: FilterMatchMode.GREATER_THAN },
     });
 
     const sortedTransactions = [...transactions].sort((a, b) => a.id - b.id);
@@ -25,11 +25,11 @@ function Transactions({ transactions }) {
                 <div className="filter-group">
                     <label className="filter-label">Minimum USD amount:</label>
                     <InputNumber
-                        value={filters.amount_in_usd.value}
+                        value={filters.amount.value}
                         onChange={(e) =>
                             setFilters({
                                 ...filters,
-                                amount_in_usd: { value: e.value, matchMode: FilterMatchMode.GREATER_THAN },
+                                amount: { value: e.value, matchMode: FilterMatchMode.GREATER_THAN },
                             })
                         }
                         className="filter-input"
@@ -54,7 +54,7 @@ function Transactions({ transactions }) {
                     onClick={() =>
                         setFilters({
                             global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-                            amount_in_usd: { value: null, matchMode: FilterMatchMode.GREATER_THAN },
+                            amount: { value: null, matchMode: FilterMatchMode.GREATER_THAN },
                         })
                     }
                     className="reset-button"
@@ -76,11 +76,12 @@ function Transactions({ transactions }) {
                 className="transactions-table"
             >
                 <Column field="transaction_number" header="Transaction Number" sortable />
-                <Column field="amount_in_usd" header="Subtracted" sortable />
+                <Column field="amount_in_domain" header="Subtracted from Account" sortable />
+                <Column field="currency_domain" header="Account Currency" sortable />
+                <Column field="created_at" header="Date" sortable />
                 <Column field="recipient_name" header="Recipient" sortable />
                 <Column field="recipient_account" header="Recipient Account" sortable />
-                <Column field="created_at" header="Date" sortable />
-                <Column field="amount" header="Amount" sortable />
+                <Column field="amount" header="Charged" sortable />
                 <Column field="currency" header="Currency" sortable />
                 <Column field="status" header="Status" sortable />
             </DataTable>

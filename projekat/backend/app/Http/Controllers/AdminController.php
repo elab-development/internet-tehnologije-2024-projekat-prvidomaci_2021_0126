@@ -22,7 +22,7 @@ class AdminController extends Controller
         }
 
         $admin->delete();
-        return response()->json('Card is deleted successfully.');
+        return response()->json('User deleted successfully.');
     }
 
     public function store(Request $request)

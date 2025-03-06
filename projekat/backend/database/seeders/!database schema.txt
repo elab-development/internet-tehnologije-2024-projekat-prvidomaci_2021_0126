@@ -29,13 +29,15 @@ $defaultPassword = 'password123';
                 'phone_number' => "+38169123456$i",
                 'role' => 'user',
             ]);
-
             for ($j = 1; $j <= 3; $j++) {
+                $balance = rand(100, 3000);
+
                 $account = Account::create([
                     'user_id' => $user->id,
                     'account_number' => Str::random(16),
                     'currency' => 'USD',
-                    'balance' => rand(1000, 10000),
+                    'balance' => $balance,
+                    'balance_in_usd' => $balance,
                     'is_active' => true,
                 ]);
 
@@ -53,16 +55,17 @@ $defaultPassword = 'password123';
                 for ($m = 1; $m <= 15; $m++) {
                     $recipient = User::where('id', '!=', $user->id)->inRandomOrder()->first();
                     $recipientAccount = $recipient ? $recipient->accounts()->inRandomOrder()->first() : null;
-                    $randomAmount = rand(10,1000);
+                    $randomAmount = rand(10,100);
                     Transaction::create([
                         'account_id' => $account->id,
                         'amount' => $randomAmount,
-                        'amount_in_usd' => $randomAmount,
+                        'amount_in_domain' => $randomAmount,
                         'status' => ['pending', 'completed', 'failed'][rand(0, 2)],
                         'recipient_name' => $faker->name,
                         'recipient_account' => Str::random(16),
                         'transaction_number' => Str::random(20),
-                        'currency' => 'USD'
+                        'currency' => 'USD',
+                        'currency_domain' => 'USD',
                     ]);
                 }
             }

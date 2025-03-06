@@ -23,10 +23,12 @@
 .filter-label {
     font-weight: bold;
     color: #213555;
+    margin: 15px;
 }
 
 .filter-input {
     padding: 8px;
+    margin: 15px;
     border: 1px solid #D8C4B6;
     border-radius: 5px;
     background-color: #FFFFFF;
@@ -101,6 +103,12 @@
 .transactions-container {
     padding: 20px;
     max-width: 1200px;
+    margin: 0 auto;
+}
+
+.transactions-container1 {
+    padding: 20px;
+    max-width: 1800px;
     margin: 0 auto;
 }
 

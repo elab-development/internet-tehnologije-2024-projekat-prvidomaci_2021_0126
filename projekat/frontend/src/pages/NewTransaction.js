@@ -7,7 +7,7 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
   const [recipient, setRecipient] = useState('');
   const [recipientAccount, setRecipientAccount] = useState('');
   const [amount, setAmount] = useState('');
-  const [selectedAccount, setSelectedAccount] = useState('');
+  const [selectedAccount, setSelectedAccount] = useState(null);
   const [error, setError] = useState('');
   const [currencies, setCurrencies] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
@@ -39,29 +39,32 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
     e.preventDefault();
   
     if (!recipient || !amount || !recipientAccount || !selectedAccount) {
-      alert('Please fill out all fields.');
+      setError('Please fill out all fields.');
       return;
     }
   
     if (isNaN(amount) || amount <= 0) {
-      alert('Please enter a valid amount.');
+      setError('Please enter a valid amount.');
       return;
     }
   
     try {
       const authToken = window.sessionStorage.getItem("auth_token");
-
-      const amountInUSD = selectedCurrency === 'USD'
-                        ? amount
-                        : (amount / exchangeRates[selectedCurrency]).toFixed(2);
-
+  
+      // Convert the amount to USD
+      const amountInUSD = (amount / exchangeRates[selectedCurrency]).toFixed(2);
+  
+      // Convert the amount to the sender's currency (domain currency)
+      const domainAmount = (amountInUSD * exchangeRates[selectedAccount.currency]).toFixed(2);
+  
       const response = await axios.post('/api/new-transaction', {
-        account_id: selectedAccount,
+        account_id: selectedAccount.id,
         recipient_account: recipientAccount,
         recipient_name: recipient,
-        amount_in_usd: amountInUSD,
+        amount_in_domain: domainAmount,
         amount: amount,
         currency: selectedCurrency,
+        currency_domain: selectedAccount.currency,
       }, {
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -69,7 +72,6 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
       });
   
       if (response.data.success) {
-
         const [accountsResponse, transactionsResponse] = await Promise.all([
           axios.get('/api/profile', {
             headers: {
@@ -109,14 +111,18 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
       <div className="form-group">
           <label>From Account:</label>
           <select
-            value={selectedAccount}
-            onChange={(e) => setSelectedAccount(e.target.value)}
+            value={selectedAccount ? selectedAccount.id : ''}
+            onChange={(e) => {
+              const accountId = e.target.value;
+              const account = accounts.find((acc) => acc.id === parseInt(accountId));
+              setSelectedAccount(account);
+            }}
             required
           >
             <option value="">Select an account</option>
             {accounts.map((account) => (
               <option key={account.id} value={account.id}>
-                {account.account_number} (Balance: ${account.balance})
+                {account.account_number} (Balance: {account.balance} {account.currency})
               </option>
             ))}
           </select>
@@ -130,7 +136,6 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
             placeholder="Enter recipient name"
-            required
           />
         </div>
 
@@ -142,7 +147,6 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             value={recipientAccount}
             onChange={(e) => setRecipientAccount(e.target.value)}
             placeholder="Enter recipient account number"
-            required
           />
         </div>
 
@@ -156,7 +160,6 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             placeholder="Enter amount"
             min="0"
             step="0.1"
-            required
           />
         </div>
 
@@ -165,7 +168,6 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
           <select
             value={selectedCurrency}
             onChange={(e) => setSelectedCurrency(e.target.value)}
-            required
           >
           {currencies.map((currency) => (
             <option key={currency} value={currency}>

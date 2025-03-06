@@ -53,7 +53,10 @@
     transition: all 0.3s ease;
     font-size: 0.95rem;
   }
-  
+  #home-button1, #home-button2{
+    margin-top: -100px;
+  }
+
   .account-button:hover {
     background-color: #213555;
     transform: translateY(-2px);

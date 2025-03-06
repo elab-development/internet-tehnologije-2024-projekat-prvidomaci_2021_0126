@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class TransactionController extends Controller
 {
@@ -28,11 +29,8 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
-        // I
-        // I
-        // V cmd command for log info and debugging
-        // tail -f storage/logs/laravel.log
 
+        //validator
         Log::info('Transaction request received:', $request->all());
 
         $validator = Validator::make($request->all(), [
@@ -40,8 +38,9 @@ class TransactionController extends Controller
             'recipient_account' => 'required|string',
             'recipient_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0.5',
-            'amount_in_usd' => 'required|numeric',
+            'amount_in_domain' => 'required|numeric',
             'currency' => 'required|string|size:3',
+            'currency_domain' => 'required|string|size:3',
         ]);
 
         if ($validator->fails()) {
@@ -55,13 +54,15 @@ class TransactionController extends Controller
 
         DB::beginTransaction();
 
+
+
         try {
-            // account which is making a transaction
+            // fetch sender account
             Log::info('Fetching sender account:', ['account_id' => $request->account_id]);
             $fromAccount = Account::findOrFail($request->account_id);
 
             // sufficient fund check
-            if ($fromAccount->balance < $request->amount_in_usd) {
+            if ($fromAccount->balance < $request->amount_in_domain) {
                 Log::error('Insufficient funds:', ['account_id' => $request->account_id, 'balance' => $fromAccount->balance, 'amount' => $request->amount]);
                 return response()->json([
                     'success' => false,
@@ -69,35 +70,47 @@ class TransactionController extends Controller
                 ], 400);
             }
 
-            //subtracting money if theres sufficient funds
-            $fromAccount->balance -= $request->amount_in_usd;
-            $fromAccount->save();
-            Log::info('Sender account updated:', ['account_id' => $request->account_id, 'new_balance' => $fromAccount->balance]);
-
-
-            // account which is receiving funds
+            // fetch recipient account
             Log::info('Fetching recipient account:', ['recipient_account' => $request->recipient_account]);
-            $recipient_account = Account::where('account_number', $request->recipient_account)->first();
+            $recipientAccount = Account::where('account_number', $request->recipient_account)->first();
 
-            if ($recipient_account) {
-                $recipient_account->balance += $request->amount_in_usd;
-                $recipient_account->save();
-                Log::info('Recipient account updated:', ['account_id' => $recipient_account->id, 'new_balance' => $recipient_account->balance]);
+            // Convert the transaction amount to the recipient's currency
+            $exchangeRates = $this->fetchExchangeRates(); // Fetch exchange rates
+            $amountInUSD = $request->amount / $exchangeRates[$request->currency]; // Convert to USD
+            $amountInRecipientCurrency = $amountInUSD *     // Convert to recipient's currency or use sender's currency if recipient account not found
+                ($recipientAccount ? $exchangeRates[$recipientAccount->currency] : $exchangeRates[$request->currency_domain]);
+
+            // Update sender's balance
+            $fromAccount->balance -= $request->amount_in_domain;
+            $fromAccount->balance_in_usd -= $amountInUSD;
+            $fromAccount->save();
+            Log::info('Sender account updated:', ['account_id' => $fromAccount->id, 'new_balance' => $fromAccount->balance, 'new_balance_in_usd' => $fromAccount->balance_in_usd]);
+
+            // Update recipient's balance if the account exists in your database
+            if ($recipientAccount) {
+                $recipientAccount->balance += $amountInRecipientCurrency;
+                $recipientAccount->balance_in_usd += $amountInUSD;
+                $recipientAccount->save();
+                Log::info('Recipient account updated:', ['account_id' => $recipientAccount->id, 'new_balance' => $recipientAccount->balance, 'new_balance_in_usd' => $recipientAccount->balance_in_usd]);
+            } else {
+                Log::info('Recipient account not found in local database. Proceeding with transaction.');
             }
 
+            // Create the transaction
             $transaction = Transaction::create([
                 'account_id' => $request->account_id,
                 'recipient_name' => $request->recipient_name,
                 'recipient_account' => $request->recipient_account,
                 'amount' => $request->amount,
-                'amount_in_usd' => $request->amount_in_usd,
+                'amount_in_domain' => $request->amount_in_domain,
                 'currency' => $request->currency,
-                'status' => $recipient_account ? 'completed' : 'pending',
+                'currency_domain' => $request->currency_domain,
+                'status' => 'completed',
                 'transaction_number' => Str::uuid(),
             ]);
             Log::info('Transaction created:', $transaction->toArray());
 
-
+            // Invalidate the cache for the user profile
             $cacheKey = 'user_profile_' . auth()->id();
             Cache::forget($cacheKey);
 
@@ -118,5 +131,14 @@ class TransactionController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    protected function fetchExchangeRates()
+    {
+        $response = Http::get('https://api.exchangerate-api.com/v4/latest/USD');
+        if ($response->successful()) {
+            return $response->json()['rates'];
+        }
+        throw new \Exception('Failed to fetch exchange rates.');
     }
 }

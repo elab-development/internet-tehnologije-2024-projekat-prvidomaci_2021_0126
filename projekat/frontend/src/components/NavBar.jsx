@@ -19,6 +19,7 @@ function NavBar({user,setUser,setAccounts,setCards,setTransactions}) {
   </>
   const adminLinks = <>
     <li><Link to="/logout" onClick={handleLogout}>Logout</Link></li>
+    <li><Link to="/">Users</Link></li>
   </>
   const managerLinks = <>
     <li><Link to="/logout" onClick={handleLogout}>Logout</Link></li>

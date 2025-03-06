@@ -30,4 +30,9 @@ class Admin extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class, 'user_id');
+    }
 }

@@ -11,24 +11,24 @@ function Home({ user, accounts }) {
     const [currentAccount, setCurrentAccount] = useState(accounts.length > 0 ? accounts[0] : null);
     const [loading, setLoading] = useState(true);
 
-    const totalBalance = accounts.reduce((sum, account) => sum + parseFloat(account.balance), 0);
+    const totalBalance = accounts.reduce((sum, account) => sum + parseFloat(account.balance_in_usd), 0);
 
     const chartData = {
         labels: accounts.map(account => account.account_number),
         datasets: [{
-            label: 'Account Balances',
-            data: accounts.map(account => account.balance),
+            label: '$',
+            data: accounts.map(account => account.balance_in_usd),
             backgroundColor: [
                 'rgba(33, 53, 85, 0.9)',
                 'rgba(88, 111, 154, 0.9)',
-                'rgba(245, 239, 231, 0.6)',
+                'rgba(216,196,182,0.6)',
                 'rgba(136, 149, 212, 0.6)',
                 'rgba(153, 102, 255, 0.6)',
-            ],
-            borderColor: [
+              ],
+              borderColor: [
                 'rgba(33, 53, 85, 1)',
                 'rgba(88, 111, 154, 1)',
-                'rgba(245, 239, 231, 1)',
+                'rgba(216,196,182,1)',
                 'rgba(136, 149, 212, 1)',
                 'rgba(153, 102, 255, 1)',
             ],
@@ -44,7 +44,7 @@ function Home({ user, accounts }) {
             },
             title: {
                 display: true,
-                text: 'Account Balances',
+                text: 'Account Balances in $',
             },
         },
     };
@@ -99,8 +99,8 @@ function Home({ user, accounts }) {
 
             {accounts.length > 1 && (
                 <div className="account-nav-buttons">
-                    <button className="account-button" onClick={handlePreviousAccount}>Previous</button>
-                    <button className="account-button" onClick={handleNextAccount}>Next</button>
+                    <button id='home-button1' className="account-button" onClick={handlePreviousAccount}>Previous</button>
+                    <button id='home-button2' className="account-button" onClick={handleNextAccount}>Next</button>
                 </div>
             )}
         </div>

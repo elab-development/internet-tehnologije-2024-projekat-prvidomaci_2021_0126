@@ -12,26 +12,17 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
 
-     public function index(Request $request)
-     {
-         $query = User::query();
-     
-         // filtriranje po imenu
-         if ($request->has('name') && $request->name != '') {
-             $query->where('name', $request->name);
-         }
-     
-         // paginacija po 15 usera i kesiranje
-         $users = Cache::remember('users', 10, function () use ($query) {
-             return $query->paginate(15);
-         });
-     
-         return response()->json([
-             'status' => true,
-             'message' => 'Users fetched.',
-             'data' => $users,
-         ]);
-     }
+    public function index(Request $request)
+    {
+
+        $users = User::all();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Users fetched successfully.',
+            'data' => $users,
+        ]);
+    }
 
 
 
@@ -64,8 +55,8 @@ class UserController extends Controller
      */
     public function show($user_id)
     {
-        $user = User::find($user_id);
-        if(is_null($user)){
+        $user = User::with('accounts')->find($user_id);
+        if (is_null($user)) {
             return response()->json('Data not found', 404);
         }
         return response()->json($user);
@@ -90,8 +81,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request)
     {
-        //
+        $user = User::find($request->id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $user->delete();
+        return response()->json('User deleted successfully.');
     }
 }

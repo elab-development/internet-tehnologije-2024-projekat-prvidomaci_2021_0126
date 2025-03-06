@@ -46,7 +46,6 @@ function Admins({}) {
                 },
             });
 
-            // Remove the deleted admin from the state
             setAdmins((prevAdmins) => prevAdmins.filter((admin) => admin.id !== adminId));
             console.log('Admin deleted successfully');
         } catch (error) {

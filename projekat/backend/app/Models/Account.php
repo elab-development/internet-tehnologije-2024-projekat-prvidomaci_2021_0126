@@ -15,18 +15,21 @@ class Account extends Model
         'user_id',
         'currency',
         'balance',
+        'balance_in_usd',
         'is_active',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function cards(){
+    public function cards()
+    {
         return $this->hasMany(Card::class);
     }
-    public function transactions(){
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class);
     }
-
 }

@@ -64,6 +64,7 @@ function Login({ setUser }) {
                         required
                         name="password"
                         onInput={(e) => handleInput(e)}
+
                     />
                 </div>
 

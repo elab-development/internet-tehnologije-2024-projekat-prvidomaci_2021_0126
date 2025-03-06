@@ -7,10 +7,6 @@ function Account({ account }) {
     return <p>No account data available.</p>;
   }
 
-  function getCurrency() {
-    if(account.currency === "USD") return '$';
-    return '';
-  }
 
   function getActivityStatus() {
     return account.is_active === 1 ? "Active" : "Inactive";
@@ -22,7 +18,7 @@ function Account({ account }) {
       <p className="account-number">{account.account_number}</p>
       
       <div className="balance-amount">
-        {getCurrency()}{account.balance}
+        {account.balance} {account.currency}
       </div>
 
       <div className={`status-badge ${getActivityStatus() === "Active" ? 'status-active' : 'status-inactive'}`}>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use App\Rules\UniqueAcrossTables;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,7 @@ class AuthController extends Controller
         try {
             $validateUser = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email',
+                'email' => ['required', 'email', new UniqueAcrossTables],
                 'password' => 'required|min:7',
                 'date_of_birth' => 'required|date',
                 'gender' => 'required|in:male,female,other',
@@ -260,7 +261,7 @@ class AuthController extends Controller
         try {
             $validateAdmin = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:admins,email',
+                'email' => ['required', 'email', new UniqueAcrossTables],
                 'password' => 'required|min:8',
             ]);
 
@@ -367,7 +368,7 @@ class AuthController extends Controller
         try {
             $validateManager = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:managers,email',
+                'email' => ['required', 'email', new UniqueAcrossTables],
                 'password' => 'required|min:8',
             ]);
 
