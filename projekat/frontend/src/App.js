@@ -36,16 +36,18 @@ function App() {
   const [admins, setAdmins] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
+  
+
 
   const userRoutes = <> 
     <Route path="/" element={<> <Home user={user} accounts={accounts} /> </>} > </Route>
+    <Route path="/profile" element={<><Breadcrumbs /><Profile user={user} /></>} />
     <Route path="/cards" element= {<><Breadcrumbs />{<Cards cards ={cards} setCards={setCards}/>}</>} />
     <Route path="/transactions" element={<><Breadcrumbs />{<Transactions transactions={transactions}/> }</>} />   
     <Route path="/new-transaction" element={<><Breadcrumbs />
                       {<NewTransaction accounts = {accounts } setAccounts ={setAccounts}
                       transactions={transactions} setTransactions = {setTransactions}/>}
     </>} />
-    <Route path="/profile" element={<><Breadcrumbs /><Profile user={user} /></>} />
     <Route path="/contact" element={<><Breadcrumbs /> <Contact/></>}>  </Route>  
     <Route path="*" element={<Navigate to="/" replace />} />
   </>

@@ -108,3 +108,65 @@
   align-items: center;
 }
 
+.accounts-section {
+  flex: 1;
+  background-color: #F5EFE7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accounts-section h3 {
+  margin-bottom: 15px;
+  color: #3E5879;
+  border-bottom: 2px solid #3E5879;
+  padding-bottom: 5px;
+}
+
+.account-nav-buttons {
+
+  display: flex;
+  justify-content: left;
+  gap: 8px;
+  margin-top: -20px;
+
+}
+
+.account-button {
+  width: 150px; 
+  height: 50px; 
+  background-color: #3E5879;
+  color: white;
+  text-align: center;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.account-button1 {
+  width: 130px; 
+  height: 47px; 
+  background-color: #D8C4B6;
+  color: #3E5879;
+  padding: 4px 8px;
+  font-size: 14px;   
+  text-align: center;
+  cursor: pointer;
+  
+}
+
+.account-button1:hover {
+  background-color: #c1a592;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(33, 53, 85, 0.2);
+}
+.account-button1:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+.account-button:hover {
+  background-color: #213555;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(33, 53, 85, 0.2);
+}

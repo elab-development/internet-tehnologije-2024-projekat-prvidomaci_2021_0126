@@ -74,6 +74,14 @@ class TransactionController extends Controller
             Log::info('Fetching recipient account:', ['recipient_account' => $request->recipient_account]);
             $recipientAccount = Account::where('account_number', $request->recipient_account)->first();
 
+            if ($recipientAccount == $fromAccount) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You cannot send money to yourself!',
+                    'error' => 'You cannot send money to yourself!',
+                ], 500);
+            }
             // Convert the transaction amount to the recipient's currency
             $exchangeRates = $this->fetchExchangeRates(); // Fetch exchange rates
             $amountInUSD = $request->amount / $exchangeRates[$request->currency]; // Convert to USD

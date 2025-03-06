@@ -1,0 +1,187 @@
+/* Reset conflicting styles from Home.css and Profile.css */
+.up-account-nav-buttons,
+.up-account-nav-buttons1,
+.up-account-button,
+.up-account-button1 {
+  all: unset; /* Reset all styles */
+}
+
+.up-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.up-top-section {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.up-accounts-section {
+  flex: 1;
+  background-color: #F5EFE7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.up-accounts-section h3 {
+  margin-bottom: 15px;
+  color: #3E5879;
+  border-bottom: 2px solid #3E5879;
+  padding-bottom: 5px;
+}
+
+.up-account-nav-buttons1 {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.up-account-button {
+  width: 150px;
+  height: 50px;
+  background-color: #3E5879;
+  color: white;
+  text-align: center;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.up-account-button1 {
+  width: 130px;
+  height: 47px;
+  background-color: #D8C4B6;
+  color: #3E5879;
+  padding: 4px 8px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.up-account-button1:hover {
+  background-color: #c1a592;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(33, 53, 85, 0.2);
+}
+
+.up-account-button1:active {
+  transform: translateY(0);
+  transition: all 0.1s ease;
+}
+
+.up-account-button:hover {
+  background-color: #213555;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(33, 53, 85, 0.2);
+}
+
+.up-chart-section {
+  flex: 1;
+  background-color: #F5EFE7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.up-chart-section h3 {
+  margin-bottom: 15px;
+  color: #3E5879;
+  border-bottom: 2px solid #3E5879;
+  padding-bottom: 5px;
+}
+
+.up-total-balance {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 1.2em;
+  color: #3E5879;
+}
+
+.up-profile-data-section {
+  background-color: #F5EFE7;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.up-profile-data-section h3 {
+  margin-bottom: 15px;
+  color: #3E5879;
+  border-bottom: 2px solid #3E5879;
+  padding-bottom: 5px;
+}
+
+.up-profile-section {
+  margin-bottom: 20px;
+}
+
+.up-profile-section label {
+  display: block;
+  margin-bottom: 5px;
+  color: #3E5879;
+  font-weight: bold;
+}
+
+.up-profile-section input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.up-profile-section p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.up-edit-button,
+.up-save-button {
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+}
+
+.up-edit-button {
+  background-color: #D8C4B6;
+  color: white;
+}
+
+.up-save-button {
+  background-color: #3E5879;
+  color: white;
+}
+
+.up-edit-button:hover,
+.up-save-button:hover {
+  opacity: 0.9;
+}
+
+.up-profile-section select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  color: #3E5879;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%233E5879%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.")}

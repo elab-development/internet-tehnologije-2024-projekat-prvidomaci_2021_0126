@@ -72,9 +72,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 Route::post('/admin/register', [AuthController::class, 'createAdmin']);
 
 Route::group(['middleware' => ['auth:admin-api']], function () {
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{id}', [UserController::class, 'show']);
-    Route::delete('/users/{id}', [UserController::class, 'destroy']);
+    Route::resource('users', UserController::class)->only(['index', 'show', 'destroy', 'update']);
 
     Route::resource('accounts', AccountController::class)->only(['index', 'show']);
     Route::post('/new-account', [AccountController::class, 'store']);

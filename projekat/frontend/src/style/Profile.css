@@ -1,121 +1,55 @@
-.profile-container {
-    color: #213555;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 1200px; 
-    margin: 0 auto; 
-    display: flex; 
-    gap: 20px; 
+/* Reset conflicting styles */
+.pr-container,
+.pr-header,
+.pr-section,
+.pr-contact {
+  all: unset; /* Reset all styles */
 }
 
-.profile-header {
-    text-align: center;
-    color: #213555;
-    border-bottom: 2px solid #3E5879;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+.pr-container {
+  color: #213555;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.profile-section {
-    background-color: #F5EFE7;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+.pr-header {
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: #213555;
+  border-bottom: 2px solid #3E5879;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
 }
 
-.profile-section h3 {
-    margin-bottom: 10px;
-    color: #3E5879;
-    border-bottom: 1px solid #3E5879;
-    padding-bottom: 5px;
+.pr-section {
+  background-color: #F5EFE7;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.profile-section p {
-    margin: 5px 0;
-    font-size: 16px;
+.pr-section h3 {
+  margin-bottom: 10px;
+  color: #3E5879;
+  border-bottom: 1px solid #3E5879;
+  padding-bottom: 5px;
 }
 
-
-.profile-data {
-    flex: 1; 
+.pr-section p {
+  margin: 5px 0;
+  font-size: 16px;
 }
 
-
-.profile-accounts {
-    flex: 1; 
-    display: flex;
-    flex-direction: column;
-    gap: 20px; 
-}
-
-/* Graph container */
-.chart-container {
-    background-color: #F5EFE7;
-    padding: 15px;
-    border-radius: 6px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.account-nav-container {
-    background-color: #F5EFE7;
-    padding: 15px;
-    border-radius: 6px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-
-.account-nav-buttons {
-    display: flex;
-    justify-content: left;
-    align-items: safe;
-    margin-top: 10px;
-}
-
-
-.account-button,
-.account-button1 {
-    width: 150px; 
-    height: 50px; 
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.account-button {
-    background-color: #3E5879;
-    color: white;
-    font-size: 16px; 
-}
-
-.account-button1 {
-    width: 130px; 
-    height: 47px; 
-    background-color: #D8C4B6;
-    color: #3E5879;
-    font-size: 14px;
-     
-}
-
-.account-button:hover {
-    background-color: #213555;
-}
-
-
-
-@media (max-width: 768px) {
-    .profile-container {
-        flex-direction: column; 
-        max-width: 100%;
-        padding: 15px;
-    }
-
-    .profile-accounts {
-        margin-top: 20px; 
-    }
+.pr-contact {
+  background-color: #F5EFE7;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
