@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
     return <Navigate to="/" replace />;
   }
 
-  // ako je prijavljen daje pristup child page komponentama
+  // if not authenticated, grants access to child components
   return <Outlet />;
 };
 

@@ -3,7 +3,7 @@
     max-width: 500px;
     margin: 40px auto;
     padding: 30px;
-    background-color: #F5EFE7; /* Light background for the container */
+    background-color: #F5EFE7; 
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -11,7 +11,7 @@
 
 .new-transaction-container h2 {
     text-align: center;
-    color: #213555; /* Dark blue for the heading */
+    color: #213555; 
     margin-bottom: 25px;
     font-size: 24px;
     font-weight: bold;
@@ -31,32 +31,32 @@
 
 .form-group label {
     font-weight: bold;
-    color: #3E5879; /* Medium blue for labels */
+    color: #3E5879; 
     font-size: 14px;
 }
 
 .form-group input,
 .form-group select {
     padding: 12px;
-    border: 2px solid #D8C4B6; /* Light brown border */
+    border: 2px solid #D8C4B6; 
     border-radius: 8px;
     font-size: 14px;
-    color: #213555; /* Dark blue text */
-    background-color: #FFFFFF; /* White background for inputs */
+    color: #213555;
+    background-color: #FFFFFF; 
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #3E5879; /* Medium blue on focus */
+    border-color: #3E5879; 
     outline: none;
-    box-shadow: 0 0 8px rgba(62, 88, 121, 0.3); /* Subtle glow effect */
+    box-shadow: 0 0 8px rgba(62, 88, 121, 0.3); 
 }
 
 .submit-button {
     padding: 12px;
-    background-color: #3E5879; /* Medium blue for the button */
-    color: #F5EFE7; /* Light text color */
+    background-color: #3E5879; 
+    color: #F5EFE7; 
     border: none;
     border-radius: 8px;
     font-size: 16px;
@@ -67,34 +67,31 @@
 }
 
 .submit-button:hover {
-    background-color: #213555; /* Darker blue on hover */
-    transform: translateY(-2px); /* Slight lift effect */
+    background-color: #213555; 
+    transform: translateY(-2px);
 }
 
 .submit-button:active {
-    transform: translateY(0); /* Reset lift effect on click */
+    transform: translateY(0); 
 }
 
-/* Error message styling */
 .error-message {
-    color: #dc3545; /* Red for error messages */
+    color: #dc3545; 
     font-size: 14px;
     text-align: center;
     margin-bottom: 15px;
     font-weight: bold;
 }
 
-/* Additional styling for select dropdown */
 .form-group select {
-    appearance: none; /* Remove default arrow */
+    appearance: none; 
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%233E5879'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 12px;
-    padding-right: 36px; /* Space for custom arrow */
+    padding-right: 36px; 
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
     .new-transaction-container {
         padding: 20px;

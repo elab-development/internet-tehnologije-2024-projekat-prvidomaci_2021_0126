@@ -22,7 +22,7 @@ class UserAccountCardTransactionSeeder extends Seeder
     public function run()
     {
 
-        //run code from database/seeders/userGenerator.txt in Tinker
+        //run code from database/seeders/!database schema.txt in Tinker
 
     }
 }

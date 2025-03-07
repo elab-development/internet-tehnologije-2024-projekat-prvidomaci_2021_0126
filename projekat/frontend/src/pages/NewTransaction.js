@@ -51,10 +51,10 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
     try {
       const authToken = window.sessionStorage.getItem("auth_token");
   
-      // Convert the amount to USD
+      // convert the amount to USD
       const amountInUSD = (amount / exchangeRates[selectedCurrency]).toFixed(2);
   
-      // Convert the amount to the sender's currency (domain currency)
+      // convert the amount to the sender's currency (domain currency)
       const domainAmount = (amountInUSD * exchangeRates[selectedAccount.currency]).toFixed(2);
   
       const response = await axios.post('/api/new-transaction', {
@@ -159,7 +159,7 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Enter amount"
             min="0"
-            step="0.1"
+            step="0.01"
           />
         </div>
 

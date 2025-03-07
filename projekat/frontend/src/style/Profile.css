@@ -1,9 +1,9 @@
-/* Reset conflicting styles */
+/* reset conflicting styles */
 .pr-container,
 .pr-header,
 .pr-section,
 .pr-contact {
-  all: unset; /* Reset all styles */
+  all: unset; 
 }
 
 .pr-container {

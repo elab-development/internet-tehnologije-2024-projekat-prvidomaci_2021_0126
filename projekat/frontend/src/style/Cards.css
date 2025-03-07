@@ -1,12 +1,12 @@
 .cards-page {
     padding: 20px;
     text-align: center;
-    background-color: #F5EFE7; /* Light background for the entire page */
+    background-color: #F5EFE7; 
 }
 
 .manage-cards-button {
-    background-color: #3E5879; /* Dark blue for the button */
-    color: #F5EFE7; /* Light text color */
+    background-color: #3E5879; 
+    color: #F5EFE7; 
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
@@ -41,7 +41,7 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 0px;
-    background-color: #F5EFE7; /* Light background for each card */
+    background-color: #F5EFE7; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -54,7 +54,7 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-color: #3E5879; /* Red color for delete button */
+    background-color: #3E5879; 
     color: white;
     border: none;
     padding: 8px 16px;
@@ -66,6 +66,6 @@
 }
 
 .delete-card-button:hover {
-    background-color: #213555; /* Darker red on hover */
+    background-color: #213555; 
     transform: translateY(-2px);
 }

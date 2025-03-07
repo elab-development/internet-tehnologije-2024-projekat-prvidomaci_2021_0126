@@ -2,14 +2,14 @@
     max-width: 500px;
     margin: 40px auto;
     padding: 30px;
-    background-color: #F5EFE7; /* Light background */
+    background-color: #F5EFE7; 
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .auth-container h2 {
     text-align: center;
-    color: #213555; /* Dark blue for headings */
+    color: #213555; 
     margin-bottom: 25px;
     font-size: 24px;
     font-weight: bold;
@@ -29,33 +29,33 @@
 
 .form-group label {
     font-weight: bold;
-    color: #3E5879; /* Medium blue for labels */
+    color: #3E5879; 
     font-size: 17px;
 }
 
 .form-group input,
 .form-group select {
     padding: 12px;
-    border: 2px solid #D8C4B6; /* Light brown border */
+    border: 2px solid #D8C4B6;
     border-radius: 8px;
     font-size: 14px;
-    color: #213555; /* Dark blue text */
-    background-color: #FFFFFF; /* White background for inputs */
+    color: #213555; 
+    background-color: #FFFFFF; 
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: #3E5879; /* Medium blue on focus */
+    border-color: #3E5879; 
     outline: none;
-    box-shadow: 0 0 8px rgba(62, 88, 121, 0.3); /* Subtle glow effect */
+    box-shadow: 0 0 8px rgba(62, 88, 121, 0.3); 
 }
 
 .submit-button,
 .login-button {
     padding: 12px;
-    background-color: #3E5879; /* Medium blue for buttons */
-    color: #F5EFE7; /* Light text color */
+    background-color: #3E5879; 
+    color: #F5EFE7; 
     border: none;
     border-radius: 8px;
     font-size: 16px;
@@ -67,17 +67,17 @@
 
 .submit-button:hover,
 .login-button:hover {
-    background-color: #213555; /* Darker blue on hover */
-    transform: translateY(-2px); /* Slight lift effect */
+    background-color: #213555;
+    transform: translateY(-2px); 
 }
 
 .submit-button:active,
 .login-button:active {
-    transform: translateY(0); /* Reset lift effect on click */
+    transform: translateY(0); 
 }
 
 .error-message {
-    color: #dc3545; /* Red for error messages */
+    color: #dc3545; 
     font-size: 14px;
     text-align: center;
     margin-bottom: 15px;
@@ -90,17 +90,17 @@
 }
 
 .link-container a {
-    color: #3E5879; /* Medium blue for links */
+    color: #3E5879;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .link-container a:hover {
-    color: #213555; /* Darker blue on hover */
+    color: #213555; 
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 600px) {
     .auth-container {
         padding: 20px;
@@ -140,37 +140,35 @@
     font-size: 16px;
 }
 
-/* Compact styles for the Register form */
 .register-container {
-    max-width: 500px; /* Keep the same max-width */
-    padding: 20px; /* Reduced padding */
+    max-width: 500px; 
+    padding: 20px; 
 }
 
 .register-container .auth-form {
-    gap: 12px; /* Reduced gap between form groups */
+    gap: 12px; 
 }
 
 .register-container .form-group {
-    gap: 6px; /* Reduced gap between label and input */
+    gap: 6px; 
 }
 
 .register-container .form-group input,
 .register-container .form-group select {
-    padding: 8px; /* Reduced padding for inputs */
-    font-size: 13px; /* Smaller font size */
+    padding: 8px;
+    font-size: 13px;
 }
 
 .register-container .form-group label {
-    font-size: 14px; /* Smaller font size for labels */
+    font-size: 14px; 
 }
 
 .register-container .submit-button {
-    padding: 10px; /* Reduced padding for the button */
-    font-size: 14px; /* Smaller font size for the button */
+    padding: 10px; 
+    font-size: 14px; 
 }
 
-/* Address fields in a compact grid */
 .register-container .form-group input[type="text"] {
-    width: 100%; /* Full width for address fields */
-    margin-bottom: 6px; /* Reduced margin between address fields */
+    width: 100%; 
+    margin-bottom: 6px; 
 }

@@ -30,9 +30,9 @@ class AccountController extends Controller
             Log::info('Fetching accounts from database.');
         }
 
-        // Use Cache::remember to cache the results for 10 minutes
+        // using Cache::remember to cache the results for 10 minutes
         $accounts = Cache::remember('accounts', 10, function () {
-            return Account::paginate(20); // Paginate the results
+            return Account::paginate(20);
         });
 
         return response()->json([
@@ -57,7 +57,6 @@ class AccountController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request
         $validator = Validator::make($request->all(), [
             'balance' => 'required|numeric|min:0',
             'balance_in_usd' => 'required|numeric|min:0',
@@ -91,16 +90,13 @@ class AccountController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-        // Invalidate the cache for the user profile
         $cacheKey = 'user_profile_' . $request->user_id;
 
-        // Log the cache key and whether it exists
         Log::info('Cache key to invalidate:', ['key' => $cacheKey]);
         Log::info('Cache exists before invalidation:', ['exists' => Cache::has($cacheKey)]);
 
         Cache::forget($cacheKey);
 
-        // Log whether the cache was successfully invalidated
         Log::info('Cache exists after invalidation:', ['exists' => Cache::has($cacheKey)]);
 
         return response()->json([

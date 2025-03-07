@@ -67,7 +67,7 @@ function Users({ users, setUsers }) {
       </div>
 
       <DataTable
-        value={users} // Pass the `data` array here
+        value={users}
         sortMode="multiple"
         filters={filters}
         paginator

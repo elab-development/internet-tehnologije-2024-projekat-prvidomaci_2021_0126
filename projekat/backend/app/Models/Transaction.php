@@ -27,7 +27,7 @@ class Transaction extends Model
 
     public function getCreatedAtAttribute($value)
     {
-        return \Carbon\Carbon::parse($value)->format('Y-m-d'); // format yyyy-mm-dd
+        return \Carbon\Carbon::parse($value)->format('Y-m-d'); // created_at in new format: yyyy-mm-dd
     }
 
     public function account()

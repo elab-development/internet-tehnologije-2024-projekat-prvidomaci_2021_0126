@@ -51,7 +51,6 @@ class AccountCardController extends Controller
             return response()->json(['message' => 'No cards found for the user\'s accounts'], 404);
         }
 
-        // Return the cards with a success message
         return response()->json([
             'message' => 'Cards retrieved successfully',
             'data' => $cards,

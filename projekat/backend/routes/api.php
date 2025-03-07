@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 // I
-// I
 // V cmd command for log info and debugging
 // tail -f storage/logs/laravel.log
 
@@ -24,9 +23,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
 Route::get('/exchange-rates', [CurrencyController::class, 'getExchangeRates']);
 
+
+// GUEST middleware
 Route::middleware('guest')->group(function () {
     Route::post('/auth/register', [AuthController::class, 'createUser']);
     Route::post('/auth/login', [AuthController::class, 'login']);
@@ -34,6 +34,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
+// USER middleware
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/profile', function (Request $request) {
@@ -69,8 +70,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('auth/logout', [AuthController::class, 'logoutUser']);
 });
 
-Route::post('/admin/register', [AuthController::class, 'createAdmin']);
 
+// ADMIN middleware
 Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::resource('users', UserController::class)->only(['index', 'show', 'destroy', 'update']);
 
@@ -83,8 +84,8 @@ Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::post('admin/logout', [AuthController::class, 'logoutAdmin']);
 });
 
-Route::post('/manager/register', [AuthController::class, 'createManager']);
 
+// MANAGER middleware
 Route::group(['middleware' => ['auth:manager-api']], function () {
     Route::get('/admins', [AdminController::class, 'index']);
     Route::post('/new-admin', [AuthController::class, 'createAdmin']);
@@ -93,3 +94,6 @@ Route::group(['middleware' => ['auth:manager-api']], function () {
 
     Route::post('manager/logout', [AuthController::class, 'logoutManager']);
 });
+
+// for me it seems illogical to make this route
+// Route::post('/manager/register', [AuthController::class, 'createManager']);

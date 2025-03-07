@@ -11,6 +11,7 @@ class CurrencyController extends Controller
 
     public function fetchExchangeRates()
     {
+        // fetching json data from $apiUrl
         $response = Http::get($this->apiUrl);
 
         if ($response->successful()) {

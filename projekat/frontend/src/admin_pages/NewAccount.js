@@ -90,7 +90,7 @@ function NewAccount() {
             onChange={(e) => setAmount(e.target.value)}
             placeholder="Enter starting balance"
             min="0"
-            step="0.1"
+            step="0.01"
             required
           />
         </div>

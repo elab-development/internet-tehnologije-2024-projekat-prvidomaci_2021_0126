@@ -7,7 +7,7 @@ const Breadcrumbs = () => {
   const pathnames = pathname.split('/').filter((x) => x);
   let breadcrumbPath = '';
 
-  // Map URL segments to friendly names
+  // mapping url segments
   const pathDisplayMap = {
     'users': 'Users',
     'new-account': 'New Account',
@@ -16,9 +16,9 @@ const Breadcrumbs = () => {
     'new-card': 'New Card',
   };
 
-  // Handle dynamic segments (e.g., user IDs, account IDs)
+  // handle dynamic segments 
   const getDisplayName = (segment, index, segments) => {
-    // Replace numeric IDs with context-specific labels
+    // replace numeric IDs with labels
     if (!isNaN(segment)) {
       const parentSegment = segments[index - 1];
       switch (parentSegment) {
@@ -33,13 +33,13 @@ const Breadcrumbs = () => {
     return pathDisplayMap[segment] || segment.replace(/-/g, ' ');
   };
 
-  // Check if a segment should be a link
+  // check if a segment should be a link
   const shouldLink = (segment, index, segments) => {
-    // Do not link numeric IDs (e.g., user IDs, account IDs)
+    // do not link numeric IDs
     if (!isNaN(segment)) {
       return false;
     }
-    // Do not link "new-account" if it's followed by a user ID
+    // do not link new-account if it's followed by a user ID
     if (segment === 'new-account' && segments[index + 1] && !isNaN(segments[index + 1])) {
       return false;
     }

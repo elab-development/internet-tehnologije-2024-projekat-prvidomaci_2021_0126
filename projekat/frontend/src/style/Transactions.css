@@ -99,7 +99,6 @@
     color: #FFFFFF;
 }
 
-/* Style the DataTable */
 .transactions-container {
     padding: 20px;
     max-width: 1600px;
@@ -122,8 +121,6 @@
 
 
 
-
-/* delete button */
 .p-button-danger {
     background-color: rgb(33, 53, 85);
     border-color: rgb(33, 53, 85);
@@ -161,26 +158,24 @@
     text-align: center;
 }
 
-/* Style the paginator */
+
 .p-paginator {
     margin-top: 20px;
     display: flex;
     justify-content: center;
 }
 
-/* Add a hover effect to table rows */
 .p-datatable .p-datatable-tbody > tr:hover {
     background-color: #f1f1f1;
     cursor: pointer;
 }
 
-/* Custom smaller button */
 .p-button-sm-custom {
     padding: 0.25rem 0.5rem; 
     font-size: 0.875rem; 
 }
 
-/* Adjust the icon size inside the button */
+
 .p-button-sm-custom .pi {
     font-size: 0.875rem;
 }
@@ -195,9 +190,9 @@
 }
 
 .p-button-danger.p-button-sm:hover {
-    animation: bounce 0.5s ease; /* Apply bounce animation */
+    animation: bounce 0.5s ease; 
 }
 
 .p-button-outlined.p-button-sm:hover {
-    animation: bounce 0.5s ease; /* Apply bounce animation */
+    animation: bounce 0.5s ease; 
 }

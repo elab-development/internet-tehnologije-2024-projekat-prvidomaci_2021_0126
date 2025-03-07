@@ -73,7 +73,6 @@ function App() {
     const authToken = window.sessionStorage.getItem("auth_token");
   
       if (!authToken) {
-        console.log("User is not authenticated. Skipping data fetch.");
         return;
       }
     function fetchUserData(){
@@ -194,6 +193,8 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute/>}>
 
+
+          {/* enabling routes based on the role of the authenticated user */}
           {user?.role === 'user' ? userRoutes : user?.role === 'admin' ? adminRoutes : managerRoutes}
           
 

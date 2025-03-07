@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../style/NewTransaction.css'; // using the same style as NewTransaction.js - form is the same
+import '../style/NewTransaction.css'; 
 import axios from 'axios';
 
 function NewAdmin() {

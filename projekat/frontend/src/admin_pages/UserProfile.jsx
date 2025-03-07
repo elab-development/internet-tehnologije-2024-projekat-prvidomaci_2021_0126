@@ -5,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
 import Account from '../components/Account';
-import '../style/UserProfile.css'; // Import the new CSS file
+import '../style/UserProfile.css'; 
 
 Chart.register(...registerables);
 
@@ -45,7 +45,7 @@ function UserProfile() {
         setAccounts(response.data.accounts || []);
         setCurrentAccount(response.data.accounts.length > 0 ? response.data.accounts[0] : null);
 
-        // Populate form data
+        // populating form data
         setFormData({
           name: response.data.name,
           date_of_birth: response.data.date_of_birth,

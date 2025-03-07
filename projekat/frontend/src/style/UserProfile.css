@@ -1,9 +1,9 @@
-/* Reset conflicting styles from Home.css and Profile.css */
+/* reset conflicting styles  */
 .up-account-nav-buttons,
 .up-account-nav-buttons1,
 .up-account-button,
 .up-account-button1 {
-  all: unset; /* Reset all styles */
+  all: unset; 
 }
 
 .up-container {

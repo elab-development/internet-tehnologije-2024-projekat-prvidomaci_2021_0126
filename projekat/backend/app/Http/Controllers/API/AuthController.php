@@ -74,11 +74,8 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Login The User
-     * @param Request $request
-     * @return User
-     */
+    // login function for EVERY ROLE in the system (user, admin and manager)
+
     public function login(Request $request)
     {
         try {
@@ -209,53 +206,6 @@ class AuthController extends Controller
         ], 200);
     }
 
-
-    /**
-     * Login The Admin
-     * @param Request $request
-     * @return Admin
-     */
-
-
-    public function loginAdmin(Request $request)
-    {
-        try {
-            $validateUser = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-
-            if ($validateUser->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validateUser->errors(),
-                ], 400);
-            }
-
-            if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid credentials',
-                ], 401);
-            }
-
-            $admin = Admin::where('email', $request->email)->first();
-
-            return response()->json([
-                'success' => true,
-                'data' => $admin,
-                'message' => 'Login successful',
-                'token' => $admin->createToken('Admin Token')->plainTextToken,
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Internal Server Error',
-            ], 500);
-        }
-    }
-
     public function createAdmin(Request $request)
     {
         try {
@@ -313,56 +263,6 @@ class AuthController extends Controller
     }
 
 
-
-
-    public function loginManager(Request $request)
-    {
-        try {
-            $validateUser = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-
-            if ($validateUser->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validateUser->errors(),
-                ], 400);
-            }
-
-            $manager = Manager::where('email', $request->email)->first();
-            if (!$manager) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Manager not found.',
-                ], 404);
-            }
-
-            if (!Hash::check($request->password, $manager->password)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid credentials',
-                ], 401);
-            }
-
-            $token = $manager->createToken('Manager API Token')->plainTextToken;
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Login successful',
-                'data' => $manager,
-                'token' => $token,
-            ], 200);
-        } catch (\Throwable $th) {
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Internal Server Error',
-            ], 500);
-        }
-    }
-
     public function createManager(Request $request)
     {
         try {
@@ -383,7 +283,7 @@ class AuthController extends Controller
             $manager = Manager::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password), // Hash facade automatically encrypts the password!
+                'password' => Hash::make($request->password), // hash facade automatically encrypts the password!
             ]);
 
             return response()->json([

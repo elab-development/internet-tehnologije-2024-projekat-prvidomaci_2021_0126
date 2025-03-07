@@ -4,12 +4,12 @@ import { Navigate, Outlet } from 'react-router-dom';
 const ProtectedRoute = () => {
   const isAuthenticated = window.sessionStorage.getItem('auth_token') !== null;
 
-  // ako nije prijavljen, redirect ka login
+  // if not authenticated, redirect to login
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // ako je prijavljen daje pristup child page komponentama
+  // if authenticated, grants access to child components
   return <Outlet />;
 };
 

@@ -82,19 +82,19 @@ class TransactionController extends Controller
                     'error' => 'You cannot send money to yourself!',
                 ], 500);
             }
-            // Convert the transaction amount to the recipient's currency
-            $exchangeRates = $this->fetchExchangeRates(); // Fetch exchange rates
-            $amountInUSD = $request->amount / $exchangeRates[$request->currency]; // Convert to USD
-            $amountInRecipientCurrency = $amountInUSD *     // Convert to recipient's currency or use sender's currency if recipient account not found
+            // convert the transaction amount to the recipient's currency
+            $exchangeRates = $this->fetchExchangeRates();
+            $amountInUSD = $request->amount / $exchangeRates[$request->currency];
+            $amountInRecipientCurrency = $amountInUSD *
                 ($recipientAccount ? $exchangeRates[$recipientAccount->currency] : $exchangeRates[$request->currency_domain]);
 
-            // Update sender's balance
+            // updating user's balance
             $fromAccount->balance -= $request->amount_in_domain;
             $fromAccount->balance_in_usd -= $amountInUSD;
             $fromAccount->save();
             Log::info('Sender account updated:', ['account_id' => $fromAccount->id, 'new_balance' => $fromAccount->balance, 'new_balance_in_usd' => $fromAccount->balance_in_usd]);
 
-            // Update recipient's balance if the account exists in your database
+            // if recipient account exists in DB, update its balance
             if ($recipientAccount) {
                 $recipientAccount->balance += $amountInRecipientCurrency;
                 $recipientAccount->balance_in_usd += $amountInUSD;
@@ -104,7 +104,6 @@ class TransactionController extends Controller
                 Log::info('Recipient account not found in local database. Proceeding with transaction.');
             }
 
-            // Create the transaction
             $transaction = Transaction::create([
                 'account_id' => $request->account_id,
                 'recipient_name' => $request->recipient_name,
@@ -118,7 +117,7 @@ class TransactionController extends Controller
             ]);
             Log::info('Transaction created:', $transaction->toArray());
 
-            // Invalidate the cache for the user profile
+            // removing cached data
             $cacheKey = 'user_profile_' . auth()->id();
             Cache::forget($cacheKey);
 

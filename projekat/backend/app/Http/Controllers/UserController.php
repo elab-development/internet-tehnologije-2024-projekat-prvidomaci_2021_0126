@@ -76,8 +76,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Log the incoming request payload
-        Log::info('Update User Request:', $request->all());
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -95,13 +93,10 @@ class UserController extends Controller
         $user = User::find($id);
 
         if (!$user) {
-            Log::error('User not found with ID: ' . $id);
             return response()->json(['message' => 'User not found'], 404);
         }
 
         $user->update($request->all());
-
-        Log::info('User updated successfully:', $user->toArray());
 
         return response()->json([
             'message' => 'User updated successfully',
