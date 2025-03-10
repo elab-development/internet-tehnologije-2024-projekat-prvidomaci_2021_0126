@@ -104,11 +104,12 @@ git clone https://github.com/elab-development/internet-tehnologije-2024-projekat
 
 - Navigate to the _backend_ folder
 - Configure the **.env file** with your database credentials
-- And run migrations using the command: _php artisan migrate:fresh --seed_
+- Run migrations using the command: _php artisan migrate:fresh --seed_
 
 OR
 
 - Use database schema located inside _projekat_ folder, within tinker (feel free to change it according to your preferences)
+- Start the development server: _php artisan serve_
 
 3. **Set up the frontend**
 
