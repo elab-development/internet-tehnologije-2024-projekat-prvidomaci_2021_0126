@@ -92,13 +92,13 @@ The application was tested to ensure functionality and security. Individual comp
 
 ## Run locally
 
-Clone the project
-
 1. **Clone the repository**
 
 ```
 git clone https://github.com/elab-development/internet-tehnologije-2024-projekat-prvidomaci_2021_0126
 ```
+
+---
 
 2. **Set up the backend**
 
@@ -108,8 +108,11 @@ git clone https://github.com/elab-development/internet-tehnologije-2024-projekat
 
 OR
 
-- Use database schema located inside _projekat_ folder, within tinker (feel free to change it according to your preferences)
+- Run the migrations using the command: _php artisan migrate:fresh_ and then use database schema located inside _projekat_ folder, within tinker (feel free to change it according to your preferences)
+
 - Start the development server: _php artisan serve_
+
+---
 
 3. **Set up the frontend**
 
