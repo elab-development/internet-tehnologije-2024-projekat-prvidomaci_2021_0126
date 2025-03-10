@@ -29,6 +29,7 @@ function NewCardForm() {
             );
 
             if (response.status === 201) {
+                console.log(JSON.stringify(response.data))
                 navigate(`/accounts/${accountId}/cards`); 
             }
         } catch (error) {

@@ -65,6 +65,7 @@ function NewAccount() {
       );
 
       if (response.data.success) {
+        console.log(JSON.stringify(response.data));
         navigate(`/users/${userId}`);
       } 
       else {

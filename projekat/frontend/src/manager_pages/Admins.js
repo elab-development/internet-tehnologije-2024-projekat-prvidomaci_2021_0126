@@ -28,7 +28,7 @@ function Admins({}) {
                     },
                 });
                 setAdmins(response.data);
-                console.log('Admins:', response.data);
+                console.log(JSON.stringify(response.data));
             } catch (error) {
                 console.error('Error fetching admin data:', error);
             }

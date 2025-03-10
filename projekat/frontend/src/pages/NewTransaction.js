@@ -84,7 +84,7 @@ function NewTransaction({accounts, setAccounts, transactions, setTransactions}) 
             },
           }),
         ]);
-  
+        console.log(JSON.stringify(response.data));
         setAccounts(accountsResponse.data['user-data'].accounts);
         setTransactions(transactionsResponse.data.data);
         navigate('/transactions');
