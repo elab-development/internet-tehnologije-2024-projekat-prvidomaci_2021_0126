@@ -99,6 +99,11 @@ class TransactionController extends Controller
                 $recipientAccount->balance += $amountInRecipientCurrency;
                 $recipientAccount->balance_in_usd += $amountInUSD;
                 $recipientAccount->save();
+
+                // clear the recipient's cache
+                $recipientCacheKey = 'user_profile_' . $recipientAccount->user_id;
+                Cache::forget($recipientCacheKey);
+
                 Log::info('Recipient account updated:', ['account_id' => $recipientAccount->id, 'new_balance' => $recipientAccount->balance, 'new_balance_in_usd' => $recipientAccount->balance_in_usd]);
             } else {
                 Log::info('Recipient account not found in local database. Proceeding with transaction.');
