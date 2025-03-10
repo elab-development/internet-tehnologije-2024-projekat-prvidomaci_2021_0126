@@ -1,34 +1,17 @@
-<?php
-
-namespace Database\Seeders;
-
 use App\Models\User;
-use App\Models\Account;
-use App\Models\Card;
 use App\Models\Admin;
 use App\Models\Manager;
+use App\Models\Account;
+use App\Models\Card;
 use App\Models\Transaction;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Faker\Factory as Faker;
 
+$faker = Faker::create(); 
 
-class DatabaseSeeder extends Seeder
-{
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
-    {
-        //ako hoces da izgenerises brda objekata za sve modele
-
-        $faker = Faker::create();
-
-        $defaultPassword = 'password123';
+$defaultPassword = 'password123';
 
         for ($i = 1; $i <= 5; $i++) {
 
@@ -71,8 +54,8 @@ class DatabaseSeeder extends Seeder
 
                 for ($m = 1; $m <= 15; $m++) {
                     $recipient = User::where('id', '!=', $user->id)->inRandomOrder()->first();
-
-                    $randomAmount = rand(10, 100);
+                    $recipientAccount = $recipient ? $recipient->accounts()->inRandomOrder()->first() : null;
+                    $randomAmount = rand(10,100);
                     Transaction::create([
                         'account_id' => $account->id,
                         'amount' => $randomAmount,
@@ -88,28 +71,21 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
 
-            $admin = Admin::create([
-                'name' => "Admin $i",
-                'email' => "admin$i@admin.com",
+                $admin = Admin::create([
+                    'name' => "Admin $i",
+                    'email' => "admin$i@admin.com",
+                    'password' => Hash::make($defaultPassword),
+                    'role' => 'admin',
+                ]);
+            }
+
+            $manager = Manager::create([
+                'name' => "Manager",
+                'email' => "manager@manager.com",
                 'password' => Hash::make($defaultPassword),
-                'role' => 'admin',
+                'role' => 'manager',
             ]);
-        }
-
-        $manager = Manager::create([
-            'name' => "Manager",
-            'email' => "manager@manager.com",
-            'password' => Hash::make($defaultPassword),
-            'role' => 'manager',
-        ]);
 
         echo "Success! \n";
-
-
-        // User::truncate();
-        // Account::truncate();
-        // Card::truncate();
-    }
-}

@@ -86,7 +86,7 @@ function App() {
       };
       
       axios.request(config).then( res =>{
-        JSON.stringify(res.data);
+        console.log(JSON.stringify(res.data));
         const userData = res.data['user-data'];
         window.sessionStorage.setItem('user_data', JSON.stringify(userData));
         setUser(userData);
@@ -106,7 +106,7 @@ function App() {
       };
       axios.request(config)
       .then((response) => {
-        JSON.stringify(response.data);
+        console.log(JSON.stringify(response.data));
         const transactionData = response.data['data'];
         setTransactions(transactionData);
       })
@@ -132,8 +132,9 @@ function App() {
       
       axios.request(config)
       .then((response) => {
-        JSON.stringify(response.data);
+        console.log(JSON.stringify(response.data));
         const cardData = response.data['data'];
+        console.log(cardData)
         setCards(cardData);
       })
       .catch((error) => {
@@ -159,6 +160,7 @@ function App() {
     
       axios.request(config).then(res => {
         const allUsersData = res.data.data; // Extract the `data` array from the response
+        console.log(JSON.stringify(res.data.data));
         setAllUsers(allUsersData);
         console.log(allUsersData);
       }).catch((error) => {

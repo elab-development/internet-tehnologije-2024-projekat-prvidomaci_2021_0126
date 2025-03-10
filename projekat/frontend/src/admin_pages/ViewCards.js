@@ -22,7 +22,7 @@ function ViewCards() {
                     },
                 });
 
-                console.log('API Response:', response.data); 
+                console.log(JSON.stringify (response.data)); 
 
                 if (response.data && Array.isArray(response.data.data)) {
                     setCards(response.data.data);

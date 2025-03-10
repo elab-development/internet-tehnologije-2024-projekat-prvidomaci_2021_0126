@@ -16,6 +16,7 @@ function Cards({cards, setCards, fetchCards}) {
           });
 
           if (response.status === 200) {
+              console.log(JSON.stringify(response.data))
               setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
           }
       } catch (error) {
